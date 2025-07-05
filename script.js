@@ -308,7 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
             "funFact": "Has a low melting point and is used in cosmetics and some pharmaceuticals."
         },
         {
-            atomicNumber: 84, "symbol": "Po", "name": "Polonium", "atomicMass": 209, "category": "metalloid", "state": "solid", "discoveryYear": "1898",
+            atomicNumber: 84, "symbol": "Po", "name": "Polonium", "atomicMass": 209, "category": "metalloid", "state": "solid", "discoveryYear: "1898",
             "funFact": "Highly radioactive, discovered by Marie Curie."
         },
         {
@@ -365,7 +365,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const card = document.createElement('div');
         card.classList.add('element-card');
         card.classList.add(`category-${element.category.replace(/\s+/g, '-')}`); // For CSS coloring
-        card.setAttribute('data-symbol', element.symbol);
+        card.setAttribute('data-atomic-number', element.atomicNumber); // Use atomic number for positioning
         card.setAttribute('data-category', element.category);
         card.setAttribute('data-state', element.state);
 
@@ -381,121 +381,12 @@ document.addEventListener('DOMContentLoaded', () => {
         return card;
     };
 
-    const renderPeriodicTable = (filteredElements) => {
-        periodicTableGrid.innerHTML = ''; // Clear existing elements
-
-        // Placeholder for Lanthanides and Actinides block
-        const lanthanideActinidePlaceholderLaLu = document.createElement('div');
-        lanthanideActinidePlaceholderLaLu.classList.add('element-card');
-        lanthanideActinidePlaceholderLaLu.classList.add('category-lanthanide');
-        lanthanideActinidePlaceholderLaLu.setAttribute('data-symbol', 'La-Lu');
-        lanthanideActinidePlaceholderLaLu.innerHTML = `<div class="symbol">La-Lu</div><div class="name">Lanthanides</div>`;
-        periodicTableGrid.appendChild(lanthanideActinidePlaceholderLaLu);
-
-        const lanthanideActinidePlaceholderAcLr = document.createElement('div');
-        lanthanideActinidePlaceholderAcLr.classList.add('element-card');
-        lanthanideActinidePlaceholderAcLr.classList.add('category-actinide');
-        lanthanideActinidePlaceholderAcLr.setAttribute('data-symbol', 'Ac-Lr');
-        lanthanideActinidePlaceholderAcLr.innerHTML = `<div class="symbol">Ac-Lr</div><div class="name">Actinides</div>`;
-        periodicTableGrid.appendChild(lanthanideActinidePlaceholderAcLr);
-
-        // Create the actual lanthanides and actinides block
-        const lanthanidesActinidesBlock = document.createElement('div');
-        lanthanidesActinidesBlock.classList.add('lanthanides-actinides');
-        lanthanidesActinidesBlock.id = 'lanthanides-actinides-block';
-        periodicTableGrid.appendChild(lanthanidesActinidesBlock);
-
-        filteredElements.forEach(element => {
-            const card = generateElementCard(element);
-
-            if (element.category === 'lanthanide' || element.category === 'actinide') {
-                lanthanidesActinidesBlock.appendChild(card);
-            } else {
-                periodicTableGrid.appendChild(card);
-            }
-        });
-    };
-
-    const applyFilters = () => {
-        const selectedCategory = categoryFilter.value;
-        const selectedState = stateFilter.value;
-
-        const filteredElements = elements.filter(element => {
-            const matchesCategory = selectedCategory === 'all' || element.category === selectedCategory;
-            const matchesState = selectedState === 'all' || element.state === selectedState;
-            return matchesCategory && matchesState;
-        });
-
-        // For rendering, we need to include all elements to ensure correct grid positioning
-        // and then hide those that don't match filters.
-        // Re-rendering the whole table for filtering is simpler for static pages.
-        const allElementsForGrid = elements.map(element => {
-            const card = generateElementCard(element);
-            const matchesCategory = selectedCategory === 'all' || element.category === selectedCategory;
-            const matchesState = selectedState === 'all' || element.state === selectedState;
-            if (!matchesCategory || !matchesState) {
-                card.classList.add('hidden');
-            }
-            return card;
-        });
-
-        periodicTableGrid.innerHTML = ''; // Clear existing elements
-
-        // Append placeholders first (if you want them explicitly)
-        // For a true grid, you'd populate all 118 cells.
-        // For simplicity and dynamic display with actual elements:
-        const mainElements = allElementsForGrid.filter(card => {
-            const symbol = card.getAttribute('data-symbol');
-            const category = card.getAttribute('data-category');
-            return !(category === 'lanthanide' || category === 'actinide');
-        });
-
-        const lanthanideActinidesBlock = document.createElement('div');
-        lanthanideActinidesBlock.classList.add('lanthanides-actinides');
-        lanthanideActinidesBlock.id = 'lanthanides-actinides-block';
-
-
-        allElementsForGrid.forEach(card => {
-            const category = card.getAttribute('data-category');
-            if (category === 'lanthanide' || category === 'actinide') {
-                lanthanideActinidesBlock.appendChild(card);
-            } else {
-                periodicTableGrid.appendChild(card);
-            }
-        });
-
-        // Add the f-block container if it has content
-        if (lanthanideActinidesBlock.childElementCount > 0) {
-             // Append the placeholder first so it occupies grid space
-            const lanthanideActinidePlaceholderLaLu = document.createElement('div');
-            lanthanideActinidePlaceholderLaLu.classList.add('element-card');
-            lanthanideActinidePlaceholderLaLu.classList.add('category-lanthanide');
-            lanthanideActinidePlaceholderLaLu.setAttribute('data-symbol', 'La-Lu');
-            lanthanideActinidePlaceholderLaLu.innerHTML = `<div class="symbol">La-Lu</div><div class="name">Lanthanides</div>`;
-            periodicTableGrid.appendChild(lanthanideActinidePlaceholderLaLu);
-
-            const lanthanideActinidePlaceholderAcLr = document.createElement('div');
-            lanthanideActinidePlaceholderAcLr.classList.add('element-card');
-            lanthanideActinidePlaceholderAcLr.classList.add('category-actinide');
-            lanthanideActinidePlaceholderAcLr.setAttribute('data-symbol', 'Ac-Lr');
-            lanthanideActinidePlaceholderAcLr.innerHTML = `<div class="symbol">Ac-Lr</div><div class="name">Actinides</div>`;
-            periodicTableGrid.appendChild(lanthanideActinidePlaceholderAcLr);
-
-            // Hide the placeholders if the corresponding block elements are displayed
-            if (selectedCategory !== 'lanthanide' && selectedCategory !== 'actinide') {
-                 // The placeholders need to be visible to maintain grid structure
-                 // So we don't hide them here. Instead, individual elements are hidden.
-            }
-
-            periodicTableGrid.appendChild(lanthanideActinidesBlock);
-        }
-    };
-
     const showModal = (element) => {
         modalElementName.textContent = element.name;
         modalElementSymbol.textContent = element.symbol;
         modalElementAtomicNumber.textContent = element.atomicNumber;
         modalElementAtomicMass.textContent = element.atomicMass + " amu";
+        // Format category name for display
         modalElementCategory.textContent = element.category.replace(/-/g, ' ').split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
         modalElementState.textContent = element.state.charAt(0).toUpperCase() + element.state.slice(1);
         modalElementDiscoveryYear.textContent = element.discoveryYear;
@@ -518,6 +409,68 @@ document.addEventListener('DOMContentLoaded', () => {
             closeModal();
         }
     });
+
+    // REVISED applyFilters function
+    const applyFilters = () => {
+        const selectedCategory = categoryFilter.value;
+        const selectedState = stateFilter.value;
+
+        periodicTableGrid.innerHTML = ''; // Clear existing elements
+
+        // Create a temporary array to hold all element cards (hidden or not)
+        const elementCards = [];
+        elements.forEach(element => {
+            const card = generateElementCard(element);
+            const matchesCategory = selectedCategory === 'all' || element.category === selectedCategory;
+            const matchesState = selectedState === 'all' || element.state === selectedState;
+
+            if (!matchesCategory || !matchesState) {
+                card.classList.add('hidden'); // Hide elements that don't match filters
+            }
+            elementCards.push(card);
+        });
+
+        // Add main block elements to the grid first
+        elementCards.filter(card => {
+            const category = card.getAttribute('data-category');
+            return !(category === 'lanthanide' || category === 'actinide');
+        }).forEach(card => {
+            periodicTableGrid.appendChild(card);
+        });
+
+
+        // Add Lanthanide and Actinide TEXT LABELS directly to the main grid
+        const lanthanideLabel = document.createElement('div');
+        lanthanideLabel.classList.add('lanthanide-label');
+        lanthanideLabel.textContent = 'Lanthanides';
+        periodicTableGrid.appendChild(lanthanideLabel);
+
+        const actinideLabel = document.createElement('div');
+        actinideLabel.classList.add('actinide-label');
+        actinideLabel.textContent = 'Actinides';
+        periodicTableGrid.appendChild(actinideLabel);
+
+
+        // Create and append the separate lanthanides/actinides block below the main table
+        const lanthanidesActinidesBlock = document.createElement('div');
+        lanthanidesActinidesBlock.classList.add('lanthanides-actinides');
+        lanthanidesActinidesBlock.id = 'lanthanides-actinides-block';
+
+        elementCards.filter(card => {
+            const category = card.getAttribute('data-category');
+            return (category === 'lanthanide' || category === 'actinide');
+        }).forEach(card => {
+            lanthanidesActinidesBlock.appendChild(card);
+        });
+
+        // Only append the f-block container if it actually contains elements
+        // This prevents an empty block from appearing if all f-block elements are filtered out
+        if (lanthanidesActinidesBlock.childElementCount > 0) {
+            periodicTableGrid.appendChild(lanthanidesActinidesBlock);
+        }
+    };
+    // END REVISED applyFilters function
+
 
     // Initial render
     applyFilters(); // Call applyFilters to render with default "All" filters
