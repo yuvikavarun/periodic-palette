@@ -35,21 +35,17 @@ header {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* New style for the pixel font title */
+/* Pixel Font Title */
 .pixel-font-title {
-    font-family: 'Press Start 2P', cursive; /* Apply the pixel font */
-    font-size: 2.5em; /* Adjust size as needed for pixel clarity */
+    font-family: 'Press Start 2P', cursive;
+    font-size: 2.5em;
     color: #8be9fd; /* Light blue for title */
     text-shadow: 0 0 15px rgba(139, 233, 253, 0.6);
     margin-bottom: 20px;
-    letter-spacing: 2px; /* Add a little space for pixel fonts */
-    word-break: break-word; /* Ensure it wraps on smaller screens */
+    letter-spacing: 2px;
+    word-break: break-word;
     line-height: 1.2;
 }
-
-/* Original h1 rule removed or modified to use .pixel-font-title if it existed */
-/* If you had 'header h1' before, replace its font-family etc. with .pixel-font-title */
-
 
 .header-controls {
     display: flex;
@@ -148,61 +144,38 @@ body.light-theme .theme-toggle-button:hover {
 main {
     display: flex;
     gap: 25px;
-    flex-grow: 1; /* Allow main content to grow and push footer down */
+    flex-grow: 1;
 }
 
 /* Filters Sidebar */
 .filters {
-    flex: 0 0 250px; /* Fixed width sidebar */
+    flex: 0 0 250px;
     background: rgba(0, 0, 0, 0.2);
     border-radius: 15px;
     padding: 20px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    min-height: 600px; /* Ensure it takes up some height */
+    min-height: 600px;
+    display: flex; /* Added for centering content */
+    flex-direction: column; /* Added for centering content */
+    justify-content: center; /* Added for centering content */
+    align-items: center; /* Added for centering content */
+    text-align: center; /* For text alignment */
 }
 
 .filters h2 {
     font-family: 'Orbitron', sans-serif;
-    color: #50fa7b; /* Greenish */
+    color: #50fa7b;
     margin-top: 0;
     margin-bottom: 20px;
     font-size: 1.6em;
-    text-align: center;
 }
 
-.filter-group {
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
-}
-
-.filter-group:last-child {
-    border-bottom: none;
-}
-
-.filter-group h3 {
-    color: #ffb86c; /* Orangeish */
-    margin-bottom: 10px;
-    font-size: 1.2em;
-}
-
-.filter-options label {
-    display: block;
-    margin-bottom: 8px;
-    cursor: pointer;
-    font-size: 0.95em;
+.filters p {
     color: #e0e0e0;
-    transition: color 0.2s;
+    font-size: 1em;
+    margin: 5px 0;
 }
 
-.filter-options label:hover {
-    color: #8be9fd;
-}
-
-.filter-options input[type="checkbox"] {
-    margin-right: 8px;
-    accent-color: #bd93f9; /* Purple accent for checkboxes */
-}
 
 body.light-theme .filters {
     background: rgba(255, 255, 255, 0.7);
@@ -213,25 +186,23 @@ body.light-theme .filters h2 {
     color: #44475a;
 }
 
-body.light-theme .filter-group h3 {
-    color: #6272a4;
-}
-
-body.light-theme .filter-options label {
+body.light-theme .filters p {
     color: #555;
 }
+
 
 /* Periodic Table Grid */
 .periodic-table-grid {
     flex-grow: 1;
     display: grid;
     grid-template-columns: repeat(18, 1fr); /* 18 columns for the periodic table */
-    gap: 8px; /* Spacing between element cards */
+    grid-template-rows: repeat(9, auto); /* 7 main rows + 2 f-block rows */
+    gap: 8px;
     padding: 10px;
     background: rgba(0, 0, 0, 0.2);
     border-radius: 15px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    align-items: start; /* Align items to the start of their grid area */
+    align-items: start;
 }
 
 body.light-theme .periodic-table-grid {
@@ -250,7 +221,7 @@ body.light-theme .periodic-table-grid {
     overflow: hidden;
     transition: all 0.2s ease-in-out;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    min-height: 70px; /* Ensure consistent height */
+    min-height: 70px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -277,28 +248,19 @@ body.light-theme .periodic-table-grid {
 .element-card .name {
     font-size: 0.75em;
     color: rgba(255, 255, 255, 0.8);
-    word-break: break-word; /* Ensure long names wrap */
+    word-break: break-word;
     padding: 0 2px;
 }
 
 .element-card:hover {
     transform: translateY(-5px) scale(1.05);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-    z-index: 10; /* Bring hovered card to front */
+    z-index: 10;
 }
 
-/* Color-coding by category */
-/* Example colors, adjust as needed for aesthetic */
-.category-alkali-metal { background-color: #ff6e6e; } /* Reddish */
-.category-alkaline-earth-metal { background-color: #f1fa8c; } /* Yellowish */
-.category-transition-metal { background-color: #bd93f9; } /* Purple */
-.category-post-transition-metal { background-color: #8be9fd; } /* Light Blue */
-.category-metalloid { background-color: #50fa7b; } /* Green */
-.category-nonmetal { background-color: #ff79c6; } /* Pink */
-.category-noble-gas { background-color: #8be9fd; } /* Light Blue (same as post-transition for now, adjust) */
-.category-lanthanide { background-color: #ffb86c; } /* Orange */
-.category-actinide { background-color: #ff9f80; } /* Coral */
-.category-unknown { background-color: #6272a4; } /* Greyish Blue */
+/* Removed category-specific color-coding as data is not available */
+/* .category-alkali-metal { background-color: #ff6e6e; } */
+/* ... etc. ... */
 
 body.light-theme .element-card {
     background-color: #f0f0f0;
@@ -328,14 +290,14 @@ body.light-theme .element-card .name {
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
     color: #f8f8f2;
     z-index: 1000;
-    pointer-events: none; /* Allows clicks to pass through when not active */
+    pointer-events: none;
     opacity: 0;
     visibility: hidden;
     transform: translateY(10px);
     transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
     max-width: 300px;
     text-align: left;
-    backdrop-filter: blur(5px); /* Frosted glass effect */
+    backdrop-filter: blur(5px);
 }
 
 .element-tooltip.active {
@@ -390,9 +352,9 @@ body.light-theme .element-tooltip .fact {
 .footer {
     text-align: center;
     padding: 20px;
-    margin-top: 40px; /* Space above the footer */
+    margin-top: 40px;
     background: rgba(0, 0, 0, 0.2);
-    color: #6272a4; /* A subtle grey-blue for footer text */
+    color: #6272a4;
     font-size: 0.9em;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
@@ -417,10 +379,11 @@ body.light-theme .footer {
         width: 100%;
         max-width: 100%;
         margin-bottom: 20px;
+        min-height: auto; /* Allow filters to shrink */
     }
 
     .periodic-table-grid {
-        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)); /* More flexible grid */
+        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
         gap: 6px;
     }
 
@@ -436,7 +399,7 @@ body.light-theme .footer {
 }
 
 @media (max-width: 768px) {
-    .pixel-font-title { /* Adjust font size for smaller screens */
+    .pixel-font-title {
         font-size: 1.8em;
     }
 
