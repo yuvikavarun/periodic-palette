@@ -1,33 +1,41 @@
 document.addEventListener('DOMContentLoaded', () => {
     const periodicTableGrid = document.getElementById('periodic-table-grid');
-    const categoryFiltersContainer = document.getElementById('category-filters');
-    const phaseFiltersContainer = document.getElementById('phase-filters');
     const searchBar = document.getElementById('search-bar');
     const themeToggle = document.getElementById('theme-toggle');
     const tooltip = document.getElementById('tooltip');
     const randomElementInfo = document.getElementById('random-element-info');
 
-    let elements = []; // To store fetched element data
-    let currentFilters = { categories: new Set(), phases: new Set() };
+    let elements = []; // This will store our simplified element data
 
-    // --- Helper Functions ---
+    // Fetch elements data
+    fetch('elements.json')
+        .then(response => response.json())
+        .then(data => {
+            elements = data;
+            renderPeriodicTable(elements);
+            setRandomElementOfDay();
+        })
+        .catch(error => console.error('Error fetching elements:', error));
 
-    // Function to get color class based on category
-    function getCategoryColorClass(category) {
-        // Normalize category name for CSS class
-        const normalizedCategory = category.toLowerCase().replace(/\s/g, '-');
-        return `category-${normalizedCategory}`;
+    // Function to render the periodic table
+    function renderPeriodicTable(elementsToRender) {
+        periodicTableGrid.innerHTML = ''; // Clear existing elements
+        elementsToRender.forEach(element => {
+            const card = createElementCard(element);
+            periodicTableGrid.appendChild(card);
+        });
     }
 
-    // Function to render a single element card
+    // Function to create an individual element card
     function createElementCard(element) {
         const card = document.createElement('div');
-        card.classList.add('element-card', getCategoryColorClass(element.category));
-        card.setAttribute('data-atomic-number', element.atomicNumber);
-        card.setAttribute('data-category', element.category.toLowerCase().replace(/\s/g, '-'));
-        card.setAttribute('data-phase', element.phase.toLowerCase());
-        card.setAttribute('data-name', element.name.toLowerCase());
-        card.setAttribute('data-symbol', element.symbol.toLowerCase());
+        card.classList.add('element-card');
+        // Set grid position directly from xpos and ypos
+        card.style.gridColumn = element.xpos;
+        card.style.gridRow = element.ypos;
+
+        // No category class as we don't have category data
+        // No phase class as we don't have phase data
 
         card.innerHTML = `
             <div class="atomic-number">${element.atomicNumber}</div>
@@ -35,192 +43,186 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="name">${element.name}</div>
         `;
 
-        // Handle tooltip display on hover
         card.addEventListener('mouseenter', (e) => showTooltip(e, element));
         card.addEventListener('mouseleave', hideTooltip);
         card.addEventListener('mousemove', updateTooltipPosition);
 
-        // Easter Egg for Oganesson (Uuo/Og)
-        if (element.symbol === 'Og' || element.symbol === 'Uuo') {
-            card.addEventListener('click', () => {
-                if (element.easterEgg) {
-                    window.open(element.easterEgg, '_blank');
-                }
-            });
-        }
-
         return card;
     }
 
-    // Function to render the entire periodic table
-    function renderPeriodicTable(filteredElements = elements) {
-        periodicTableGrid.innerHTML = ''; // Clear existing elements
-
-        // Create an array to hold all elements in their correct grid position
-        const orderedElements = Array(118).fill(null);
-        filteredElements.forEach(element => {
-            // Adjust for grid layout (e.g., Hydrogen is at grid-column: 1, grid-row: 1)
-            // This part is crucial and requires careful mapping.
-            // For a perfect layout, you'd need to know the specific grid positions.
-            // For simplicity, let's assume atomicNumber - 1 is a good starting point for a flat grid
-            // and then manually adjust for groups/periods with CSS grid-column/grid-row.
-            // A more robust solution would involve adding 'xpos' and 'ypos' to your JSON data.
-
-            // Dummy positioning for basic grid
-            // This will NOT give a proper periodic table layout by itself.
-            // You'd need specific grid-column/grid-row values in CSS or via JS for each element.
-            // A common approach is to add `xpos` and `ypos` to your JSON data.
-            // For now, let's just append. For a proper grid, you'll apply `grid-column` and `grid-row`
-            // directly to each `element-card` via JavaScript or CSS for specific elements.
-            // Example: card.style.gridColumn = element.xpos; card.style.gridRow = element.ypos;
-            periodicTableGrid.appendChild(createElementCard(element));
-        });
-    }
-
-    // Function to show tooltip
+    // --- Tooltip Functions (Simplified) ---
     function showTooltip(e, element) {
+        // Updated innerHTML to match the simplified data
         tooltip.innerHTML = `
-            <h4>${element.name} ${element.emoji || ''}</h4>
+            <h4>${element.name}</h4>
             <p><strong>Symbol:</strong> ${element.symbol}</p>
             <p><strong>Atomic Number:</strong> ${element.atomicNumber}</p>
-            <p><strong>Atomic Mass:</strong> ${element.atomicMass.toFixed(3)}</p>
-            <p><strong>Category:</strong> ${element.category}</p>
-            <p><strong>Phase:</strong> ${element.phase}</p>
+            <p><strong>Group:</strong> ${element.group}</p>
             <p class="fact">"${element.quirkyFact}"</p>
         `;
         tooltip.classList.add('active');
         updateTooltipPosition(e);
-    }
 
-    // Function to update tooltip position
-    function updateTooltipPosition(e) {
-        const x = e.clientX + 15; // Offset from mouse cursor
-        const y = e.clientY + 15;
-        tooltip.style.left = `${x}px`;
-        tooltip.style.top = `${y}px`;
-
-        // Keep tooltip within viewport
-        const tooltipRect = tooltip.getBoundingClientRect();
-        if (x + tooltipRect.width > window.innerWidth - 20) {
-            tooltip.style.left = `${e.clientX - tooltipRect.width - 15}px`;
-        }
-        if (y + tooltipRect.height > window.innerHeight - 20) {
-            tooltip.style.top = `${e.clientY - tooltipRect.height - 15}px`;
+        // Easter egg for Oganesson
+        if (element.atomicNumber === 118 && element.easterEgg) {
+            window.location.href = element.easterEgg; // Redirect to Rickroll
         }
     }
 
-    // Function to hide tooltip
     function hideTooltip() {
         tooltip.classList.remove('active');
     }
 
-    // --- Filtering Logic ---
-    function applyFiltersAndSearch() {
-        const searchTerm = searchBar.value.toLowerCase();
-        const filtered = elements.filter(element => {
-            const matchesSearch = element.name.toLowerCase().includes(searchTerm) ||
-                                  element.symbol.toLowerCase().includes(searchTerm) ||
-                                  element.atomicNumber.toString().includes(searchTerm);
+    function updateTooltipPosition(e) {
+        const x = e.clientX + 15;
+        const y = e.clientY + 15;
 
-            const matchesCategory = currentFilters.categories.size === 0 ||
-                                    currentFilters.categories.has(element.category.toLowerCase().replace(/\s/g, '-'));
+        // Ensure tooltip stays within viewport
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        const tooltipRect = tooltip.getBoundingClientRect();
 
-            const matchesPhase = currentFilters.phases.size === 0 ||
-                                 currentFilters.phases.has(element.phase.toLowerCase());
+        let finalX = x;
+        let finalY = y;
 
-            return matchesSearch && matchesCategory && matchesPhase;
-        });
-        renderPeriodicTable(filtered);
-    }
-
-    // --- Event Listeners ---
-
-    // Fetch elements data
-    async function fetchElements() {
-        try {
-            const response = await fetch('elements.json');
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            elements = await response.json();
-            populateCategoryFilters(); // Populate filters after fetching data
-            renderPeriodicTable(); // Initial render
-            displayRandomElement(); // Display random element on load
-        } catch (error) {
-            console.error('Error fetching elements:', error);
-            periodicTableGrid.innerHTML = '<p>Failed to load periodic table data. Please try again later.</p>';
+        if (x + tooltipRect.width > viewportWidth) {
+            finalX = e.clientX - tooltipRect.width - 15;
         }
+        if (y + tooltipRect.height > viewportHeight) {
+            finalY = e.clientY - tooltipRect.height - 15;
+        }
+
+        tooltip.style.left = `${finalX}px`;
+        tooltip.style.top = `${finalY}px`;
     }
 
-    // Populate category filters dynamically
-    function populateCategoryFilters() {
-        const categories = new Set(elements.map(e => e.category.toLowerCase().replace(/\s/g, '-')));
-        categoryFiltersContainer.innerHTML = ''; // Clear existing
-        categories.forEach(category => {
-            const label = document.createElement('label');
-            label.innerHTML = `<input type="checkbox" data-filter="category" value="${category}"> ${category.replace(/-/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}`;
-            categoryFiltersContainer.appendChild(label);
-        });
-        addFilterEventListeners(); // Add listeners after populating
-    }
-
-    // Add event listeners for filters
-    function addFilterEventListeners() {
-        document.querySelectorAll('input[type="checkbox"][data-filter="category"]').forEach(checkbox => {
-            checkbox.addEventListener('change', (e) => {
-                if (e.target.checked) {
-                    currentFilters.categories.add(e.target.value);
-                } else {
-                    currentFilters.categories.delete(e.target.value);
-                }
-                applyFiltersAndSearch();
-            });
-        });
-
-        document.querySelectorAll('input[type="checkbox"][data-filter="phase"]').forEach(checkbox => {
-            checkbox.addEventListener('change', (e) => {
-                if (e.target.checked) {
-                    currentFilters.phases.add(e.target.value);
-                } else {
-                    currentFilters.phases.delete(e.target.value);
-                }
-                applyFiltersAndSearch();
-            });
-        });
-    }
-
-    // Search bar event listener
-    searchBar.addEventListener('input', applyFiltersAndSearch);
-
-    // Theme toggle
-    themeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('light-theme');
-        const isLight = document.body.classList.contains('light-theme');
-        localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    // --- Search Functionality ---
+    searchBar.addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+        const filteredElements = elements.filter(element =>
+            element.name.toLowerCase().includes(searchTerm) ||
+            element.symbol.toLowerCase().includes(searchTerm) ||
+            element.atomicNumber.toString().includes(searchTerm)
+        );
+        renderPeriodicTable(filteredElements);
     });
 
-    // Load saved theme preference
-    function loadThemePreference() {
+    // --- Theme Toggle Functionality ---
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('light-theme');
+        document.body.classList.toggle('dark-theme');
+        // Store theme preference
+        const currentTheme = document.body.classList.contains('light-theme') ? 'light' : 'dark';
+        localStorage.setItem('theme', currentTheme);
+    });
+
+    // Apply saved theme on load
+    function applySavedTheme() {
         const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'light') {
-            document.body.classList.add('light-theme');
+        if (savedTheme) {
+            document.body.classList.remove('light-theme', 'dark-theme'); // Clear existing classes
+            document.body.classList.add(`${savedTheme}-theme`);
         }
     }
+    applySavedTheme();
 
-    // Random Element of the Day
-    function displayRandomElement() {
+    // --- Random Element of the Day ---
+    function setRandomElementOfDay() {
         if (elements.length > 0) {
+            const today = new Date();
+            const seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate(); // YYYYMMDD
+            Math.seedrandom(seed); // Seed the random number generator
             const randomIndex = Math.floor(Math.random() * elements.length);
             const randomElement = elements[randomIndex];
+
             randomElementInfo.innerHTML = `
-                <strong>${randomElement.name} (${randomElement.symbol})</strong>
-                <br>Atomic Number: ${randomElement.atomicNumber}
-                <br>Fact: ${randomElement.quirkyFact}
+                <p><strong>${randomElement.name} (${randomElement.symbol})</strong></p>
+                <p>Atomic No. ${randomElement.atomicNumber}</p>
+                <p class="fact">"${randomElement.quirkyFact}"</p>
             `;
         }
     }
 
-    // --- Initialization ---
-    loadThemePreference();
-    fetchElements();
-});
+    // Polyfill for Math.seedrandom to ensure daily random element is consistent
+    // (This ensures the random element is the same for a given day)
+    (function(global, factory) {
+        if (typeof define === 'function' && define.amd) {
+            define(['exports'], factory);
+        } else if (typeof exports === 'object' && typeof module !== 'undefined') {
+            factory(exports);
+        } else {
+            factory((global.seedrandom = {}));
+        }
+    }(this, function(exports) {
+        var stringEntropy = function(str) {
+            var seed = 0;
+            for (var i = 0; i < str.length; i++) {
+                seed = ((seed << 5) - seed) + str.charCodeAt(i);
+                seed |= 0; // To 32bit integer
+            }
+            return seed;
+        };
+
+        var sr = function(seed, options) {
+            options = options || {};
+            var key = [];
+
+            // Flatten the seed if it is an object or array
+            if (seed && typeof seed === 'object') {
+                for (var i in seed) {
+                    try {
+                        key.push(stringEntropy(String(seed[i])));
+                    } catch (e) { /* ignore */ }
+                }
+            } else {
+                key.push(stringEntropy(String(seed)));
+            }
+
+            var mash = Mash();
+            var random = pure_lcg(mash(key.join('')));
+
+            return random;
+        };
+
+        // LCG for deterministic random numbers
+        function pure_lcg(seed) {
+            var A = 1103515245;
+            var C = 12345;
+            var M = 2**32; // Modulo 2^32
+
+            var state = seed;
+
+            var random = function() {
+                state = (A * state + C) % M;
+                return state / M;
+            };
+            return random;
+        }
+
+        // Hash function for seed string
+        function Mash() {
+            var n = 0xefc8249d;
+
+            return function(data) {
+                data = String(data);
+                for (var i = 0; i < data.length; i++) {
+                    n += data.charCodeAt(i);
+                    var h = 0.02519603282416938 * n;
+                    n = h >>> 0;
+                    h -= n;
+                    h *= n;
+                    n = h >>> 0;
+                    h -= n;
+                    n += h * 0x100000000; // 2^32
+                }
+                return (n >>> 0) * 2.3283064365386963e-10; // C: 2^-32
+            };
+        }
+
+        exports.seedrandom = sr; // Attach to exports for access
+        if (typeof Math !== 'undefined') {
+            Math.seedrandom = sr; // Attach to Math for direct use
+        }
+    }));
+
+}); // End DOMContentLoaded
