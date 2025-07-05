@@ -349,9 +349,8 @@ h1.pixel-font { /* Changed to h1.pixel-font for specificity */
     overflow: auto; /* Enable scroll if needed */
     background-color: rgba(0, 0, 0, 0.6); /* Black w/ opacity */
     backdrop-filter: blur(5px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; /* These will only apply when JS sets display:flex */
+    align-items: center; /* These will only apply when JS sets display:flex */
 }
 
 .modal-content {
