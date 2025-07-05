@@ -15,28 +15,67 @@
 
         body {
             font-family: 'Quicksand', sans-serif;
-            background: #000000;
+            background: 
+                radial-gradient(ellipse at top, #1a1a2e 0%, #0c0c0c 100%),
+                radial-gradient(ellipse at bottom, #16213e 0%, #0c0c0c 100%);
             min-height: 100vh;
             color: #ffffff;
             overflow-x: auto;
             position: relative;
         }
 
-        #cosmic-background {
+        body::before {
+            content: '';
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.8), transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.6), transparent),
+                radial-gradient(1px 1px at 90px 40px, rgba(255, 255, 255, 0.9), transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.7), transparent),
+                radial-gradient(2px 2px at 160px 30px, rgba(255, 255, 255, 0.8), transparent),
+                radial-gradient(1px 1px at 200px 100px, rgba(255, 255, 255, 0.6), transparent),
+                radial-gradient(1px 1px at 250px 50px, rgba(255, 255, 255, 0.9), transparent),
+                radial-gradient(2px 2px at 300px 120px, rgba(255, 255, 255, 0.7), transparent),
+                radial-gradient(1px 1px at 350px 20px, rgba(255, 255, 255, 0.8), transparent),
+                radial-gradient(1px 1px at 400px 90px, rgba(255, 255, 255, 0.6), transparent),
+                radial-gradient(2px 2px at 450px 60px, rgba(255, 255, 255, 0.9), transparent),
+                radial-gradient(1px 1px at 500px 110px, rgba(255, 255, 255, 0.7), transparent),
+                radial-gradient(1px 1px at 550px 30px, rgba(255, 255, 255, 0.8), transparent),
+                radial-gradient(2px 2px at 600px 80px, rgba(255, 255, 255, 0.6), transparent),
+                radial-gradient(1px 1px at 650px 50px, rgba(255, 255, 255, 0.9), transparent),
+                radial-gradient(1px 1px at 700px 100px, rgba(255, 255, 255, 0.7), transparent),
+                radial-gradient(2px 2px at 750px 40px, rgba(255, 255, 255, 0.8), transparent),
+                radial-gradient(1px 1px at 800px 90px, rgba(255, 255, 255, 0.6), transparent),
+                radial-gradient(1px 1px at 850px 20px, rgba(255, 255, 255, 0.9), transparent),
+                radial-gradient(2px 2px at 900px 70px, rgba(255, 255, 255, 0.7), transparent),
+                radial-gradient(circle at 15% 25%, rgba(138, 43, 226, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 85% 75%, rgba(75, 0, 130, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 45% 10%, rgba(25, 25, 112, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 40%, rgba(72, 61, 139, 0.1) 0%, transparent 50%);
+            background-size: 
+                550px 550px, 550px 550px, 550px 550px, 550px 550px, 550px 550px,
+                550px 550px, 550px 550px, 550px 550px, 550px 550px, 550px 550px,
+                550px 550px, 550px 550px, 550px 550px, 550px 550px, 550px 550px,
+                550px 550px, 550px 550px, 550px 550px, 550px 550px, 550px 550px,
+                100% 100%, 100% 100%, 100% 100%, 100% 100%;
+            animation: twinkle 20s linear infinite;
+            pointer-events: none;
             z-index: -1;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
         }
 
         .container {
             max-width: 1800px;
             margin: 0 auto;
             padding: 20px;
-            position: relative;
-            z-index: 1;
         }
 
         .header {
@@ -45,47 +84,50 @@
         }
 
         .header h1 {
-            font-family: 'Courier New', monospace;
-            font-size: 4.5rem;
-            font-weight: 900;
-            color: #bb44ff;
-            text-shadow: 
-                0 0 10px #bb44ff,
-                0 0 20px #bb44ff,
-                0 0 40px #bb44ff,
-                0 0 80px #bb44ff,
-                0 0 120px #bb44ff;
+            font-family: 'Minecraft', 'JetBrains Mono', monospace;
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #64b3f4, #c2e9fb, #a8edea, #fed6e3, #ffeaa7, #74b9ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 10px;
+            text-shadow: 
+                0 0 20px rgba(100, 179, 244, 0.5),
+                0 0 40px rgba(162, 233, 234, 0.3),
+                0 0 60px rgba(254, 214, 227, 0.2);
+            letter-spacing: 4px;
             text-transform: uppercase;
-            letter-spacing: 8px;
-            -webkit-font-smoothing: none;
-            font-smooth: never;
-            image-rendering: pixelated;
             position: relative;
         }
 
         .header h1::before {
             content: '';
             position: absolute;
-            top: -15px;
-            left: -15px;
-            right: -15px;
-            bottom: -15px;
-            background: linear-gradient(45deg, transparent, rgba(187, 68, 255, 0.1), transparent);
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, transparent, rgba(100, 179, 244, 0.1), transparent);
             border-radius: 20px;
             z-index: -1;
-            animation: pulse 2s ease-in-out infinite alternate;
         }
 
-        @keyframes pulse {
-            0% { opacity: 0.5; }
-            100% { opacity: 1; }
+        @font-face {
+            font-family: 'Minecraft';
+            src: url('data:font/woff2;base64,') format('woff2');
+            font-weight: normal;
+            font-style: normal;
         }
 
-        .header p {
-            font-size: 1.2rem;
-            opacity: 0.8;
-            color: #c2c2c2;
+        /* Fallback for Minecraft-style font using CSS */
+        .header h1 {
+            font-family: 'Courier New', 'JetBrains Mono', monospace;
+            font-weight: 900;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: none;
+            font-smooth: never;
+            image-rendering: pixelated;
         }
 
         .filters {
@@ -97,52 +139,46 @@
         }
 
         .filter-btn {
-            padding: 10px 20px;
+            padding: 8px 16px;
             border: 2px solid rgba(255, 255, 255, 0.2);
             background: rgba(255, 255, 255, 0.1);
             color: white;
-            border-radius: 25px;
+            border-radius: 20px;
             cursor: pointer;
             transition: all 0.3s ease;
             font-family: 'Quicksand', sans-serif;
             font-weight: 600;
             font-size: 0.9rem;
-            backdrop-filter: blur(10px);
         }
 
         .filter-btn:hover {
             background: rgba(255, 255, 255, 0.2);
             transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(187, 68, 255, 0.3);
+            box-shadow: 0 4px 15px rgba(100, 179, 244, 0.3);
         }
 
         .filter-btn.active {
-            background: linear-gradient(45deg, #bb44ff, #9933cc);
-            color: white;
-            border-color: #bb44ff;
-            box-shadow: 0 0 20px rgba(187, 68, 255, 0.5);
+            background: linear-gradient(45deg, #64b3f4, #c2e9fb);
+            color: #1a1a2e;
+            border-color: #64b3f4;
         }
 
         .periodic-table {
             display: grid;
             grid-template-columns: repeat(18, 1fr);
-            gap: 6px;
+            gap: 4px;
             margin-bottom: 30px;
             min-width: 1200px;
-            max-width: 1600px;
-            margin-left: auto;
-            margin-right: auto;
         }
 
         .element {
-            width: 100%;
-            height: 80px;
+            aspect-ratio: 1;
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            backdrop-filter: blur(15px);
+            backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             flex-direction: column;
@@ -150,6 +186,7 @@
             align-items: center;
             text-align: center;
             padding: 8px;
+            min-height: 80px;
         }
 
         .element:hover {
@@ -247,7 +284,7 @@
         }
 
         .close:hover {
-            color: #bb44ff;
+            color: #ff6b6b;
         }
 
         .modal-header {
@@ -295,16 +332,16 @@
         }
 
         .fun-fact {
-            background: rgba(187, 68, 255, 0.1);
+            background: rgba(100, 179, 244, 0.1);
             padding: 15px;
             border-radius: 10px;
-            border-left: 4px solid #bb44ff;
+            border-left: 4px solid #64b3f4;
         }
 
         .fun-fact-title {
             font-weight: 600;
             margin-bottom: 8px;
-            color: #bb44ff;
+            color: #64b3f4;
         }
 
         .legend {
@@ -345,7 +382,7 @@
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 2.5rem;
-                letter-spacing: 4px;
+                letter-spacing: 2px;
             }
             
             .filters {
@@ -353,7 +390,7 @@
             }
             
             .filter-btn {
-                padding: 8px 16px;
+                padding: 6px 12px;
                 font-size: 0.8rem;
             }
             
@@ -368,8 +405,6 @@
     </style>
 </head>
 <body>
-    <canvas id="cosmic-background"></canvas>
-    
     <div class="container">
         <div class="header">
             <h1>Periodic Palette</h1>
@@ -461,148 +496,7 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        // Cosmic background with Three.js
-        function createCosmicBackground() {
-            const canvas = document.getElementById('cosmic-background');
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
-            
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setClearColor(0x000000, 0);
-            
-            // Create starfield
-            const starGeometry = new THREE.BufferGeometry();
-            const starCount = 2000;
-            const starPositions = new Float32Array(starCount * 3);
-            const starColors = new Float32Array(starCount * 3);
-            
-            for (let i = 0; i < starCount * 3; i += 3) {
-                starPositions[i] = (Math.random() - 0.5) * 2000;
-                starPositions[i + 1] = (Math.random() - 0.5) * 2000;
-                starPositions[i + 2] = (Math.random() - 0.5) * 2000;
-                
-                // Create varied star colors
-                const intensity = Math.random() * 0.5 + 0.5;
-                starColors[i] = intensity;
-                starColors[i + 1] = intensity * (0.8 + Math.random() * 0.2);
-                starColors[i + 2] = intensity * (0.6 + Math.random() * 0.4);
-            }
-            
-            starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
-            starGeometry.setAttribute('color', new THREE.BufferAttribute(starColors, 3));
-            
-            const starMaterial = new THREE.PointsMaterial({
-                size: 2,
-                vertexColors: true,
-                transparent: true,
-                opacity: 0.8
-            });
-            
-            const stars = new THREE.Points(starGeometry, starMaterial);
-            scene.add(stars);
-            
-            // Create nebula clouds
-            const nebulaGeometry = new THREE.SphereGeometry(50, 32, 32);
-            const nebulaMaterial = new THREE.MeshBasicMaterial({
-                color: 0x6644ff,
-                transparent: true,
-                opacity: 0.1
-            });
-            
-            for (let i = 0; i < 5; i++) {
-                const nebula = new THREE.Mesh(nebulaGeometry, nebulaMaterial);
-                nebula.position.set(
-                    (Math.random() - 0.5) * 500,
-                    (Math.random() - 0.5) * 500,
-                    (Math.random() - 0.5) * 500
-                );
-                nebula.scale.set(
-                    Math.random() * 2 + 1,
-                    Math.random() * 2 + 1,
-                    Math.random() * 2 + 1
-                );
-                scene.add(nebula);
-            }
-            
-            // Create colorful particle systems
-            const particleGeometry = new THREE.BufferGeometry();
-            const particleCount = 500;
-            const particlePositions = new Float32Array(particleCount * 3);
-            const particleColors = new Float32Array(particleCount * 3);
-            
-            for (let i = 0; i < particleCount * 3; i += 3) {
-                particlePositions[i] = (Math.random() - 0.5) * 1000;
-                particlePositions[i + 1] = (Math.random() - 0.5) * 1000;
-                particlePositions[i + 2] = (Math.random() - 0.5) * 1000;
-                
-                // Purple/pink/blue particle colors
-                const colorChoice = Math.random();
-                if (colorChoice < 0.33) {
-                    particleColors[i] = 0.7;
-                    particleColors[i + 1] = 0.2;
-                    particleColors[i + 2] = 1.0;
-                } else if (colorChoice < 0.66) {
-                    particleColors[i] = 1.0;
-                    particleColors[i + 1] = 0.2;
-                    particleColors[i + 2] = 0.8;
-                } else {
-                    particleColors[i] = 0.2;
-                    particleColors[i + 1] = 0.6;
-                    particleColors[i + 2] = 1.0;
-                }
-            }
-            
-            particleGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
-            particleGeometry.setAttribute('color', new THREE.BufferAttribute(particleColors, 3));
-            
-            const particleMaterial = new THREE.PointsMaterial({
-                size: 3,
-                vertexColors: true,
-                transparent: true,
-                opacity: 0.6
-            });
-            
-            const particles = new THREE.Points(particleGeometry, particleMaterial);
-            scene.add(particles);
-            
-            camera.position.z = 100;
-            
-            // Animation loop
-            function animate() {
-                requestAnimationFrame(animate);
-                
-                // Rotate the star field
-                stars.rotation.x += 0.0005;
-                stars.rotation.y += 0.001;
-                
-                // Rotate particles
-                particles.rotation.x += 0.001;
-                particles.rotation.y += 0.002;
-                
-                // Animate nebula
-                scene.children.forEach(child => {
-                    if (child.material && child.material.color && child.material.color.getHex() === 0x6644ff) {
-                        child.rotation.x += 0.002;
-                        child.rotation.y += 0.003;
-                    }
-                });
-                
-                renderer.render(scene, camera);
-            }
-            
-            animate();
-            
-            // Handle window resize
-            window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-            });
-        }
-
         // Element data
         const elements = [
             // Period 1
@@ -639,4 +533,120 @@
             { symbol: 'Kr', name: 'Krypton', atomicNumber: 36, atomicMass: 83.798, category: 'noble-gases', state: 'gas', row: 4, col: 18, funFact: 'Named after the Greek word for "hidden" and Superman\'s home planet!' },
             
             // Period 5 (partial)
-            { symbol: 'Ag', name: 'Silver', atomicNumber: 47, atomicMass: 107.868, category
+            { symbol: 'Ag', name: 'Silver', atomicNumber: 47, atomicMass: 107.868, category: 'transition-metals', state: 'solid', row: 5, col: 11, funFact: 'The best conductor of electricity and has antibacterial properties!' },
+            { symbol: 'I', name: 'Iodine', atomicNumber: 53, atomicMass: 126.904, category: 'halogens', state: 'solid', row: 5, col: 17, funFact: 'Essential for thyroid function and turns purple when heated!' },
+            { symbol: 'Xe', name: 'Xenon', atomicNumber: 54, atomicMass: 131.293, category: 'noble-gases', state: 'gas', row: 5, col: 18, funFact: 'Used in powerful camera flashes and car headlights!' },
+            
+            // Period 6 (partial)
+            { symbol: 'Au', name: 'Gold', atomicNumber: 79, atomicMass: 196.967, category: 'transition-metals', state: 'solid', row: 6, col: 11, funFact: 'Never tarnishes and is so soft you can shape it with your hands!' },
+            { symbol: 'Hg', name: 'Mercury', atomicNumber: 80, atomicMass: 200.592, category: 'transition-metals', state: 'liquid', row: 6, col: 12, funFact: 'The only metal that\'s liquid at room temperature!' },
+            { symbol: 'Rn', name: 'Radon', atomicNumber: 86, atomicMass: 222, category: 'noble-gases', state: 'gas', row: 6, col: 18, funFact: 'Radioactive and can accumulate in basements!' }
+        ];
+
+        // Create periodic table grid
+        function createPeriodicTable() {
+            const table = document.getElementById('periodicTable');
+            
+            // Create empty grid
+            for (let i = 0; i < 18 * 7; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'element empty-cell';
+                table.appendChild(cell);
+            }
+            
+            // Place elements
+            elements.forEach(element => {
+                const index = (element.row - 1) * 18 + (element.col - 1);
+                const cell = table.children[index];
+                
+                cell.className = `element ${element.category}`;
+                cell.setAttribute('data-category', element.category);
+                cell.setAttribute('data-state', element.state);
+                
+                cell.innerHTML = `
+                    <div class="atomic-number">${element.atomicNumber}</div>
+                    <div class="symbol">${element.symbol}</div>
+                    <div class="name">${element.name}</div>
+                `;
+                
+                cell.addEventListener('click', () => openModal(element));
+            });
+        }
+
+        // Modal functionality
+        function openModal(element) {
+            const modal = document.getElementById('elementModal');
+            
+            document.getElementById('modalSymbol').textContent = element.symbol;
+            document.getElementById('modalName').textContent = element.name;
+            document.getElementById('modalAtomicNumber').textContent = element.atomicNumber;
+            document.getElementById('modalAtomicMass').textContent = element.atomicMass;
+            document.getElementById('modalCategory').textContent = element.category.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase());
+            document.getElementById('modalState').textContent = element.state.charAt(0).toUpperCase() + element.state.slice(1);
+            document.getElementById('modalFunFact').textContent = element.funFact;
+            
+            // Apply category color to modal symbol
+            const modalSymbol = document.getElementById('modalSymbol');
+            modalSymbol.className = `modal-symbol ${element.category}`;
+            
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('elementModal').style.display = 'none';
+        }
+
+        // Filter functionality
+        function setupFilters() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const elements = document.querySelectorAll('.element:not(.empty-cell)');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    
+                    const filter = button.getAttribute('data-filter');
+                    
+                    elements.forEach(element => {
+                        if (filter === 'all') {
+                            element.classList.remove('hidden');
+                        } else {
+                            const category = element.getAttribute('data-category');
+                            const state = element.getAttribute('data-state');
+                            
+                            if (category === filter || state === filter) {
+                                element.classList.remove('hidden');
+                            } else {
+                                element.classList.add('hidden');
+                            }
+                        }
+                    });
+                });
+            });
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            createPeriodicTable();
+            setupFilters();
+            
+            // Close modal
+            document.querySelector('.close').addEventListener('click', closeModal);
+            document.getElementById('elementModal').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('elementModal')) {
+                    closeModal();
+                }
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
