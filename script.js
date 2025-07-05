@@ -101,11 +101,11 @@ document.addEventListener('DOMContentLoaded', () => {
         { atomicNumber: 81, "symbol": "Tl", "name": "Thallium", "atomicMass": 204.38, "category": "post-transition-metal", "state": "solid", "discoveryYear": "1861", "funFact": "Highly toxic, historically used as a rat poison." },
         { atomicNumber: 82, "symbol": "Pb", "name": "Lead", "atomicMass": 207.2, "category": "post-transition-metal", "state": "solid", "discoveryYear": "Ancient", "funFact": "Used in car batteries and radiation shielding, but its use is declining due to toxicity." },
         { atomicNumber: 83, "symbol": "Bi", "name": "Bismuth", "atomicMass": 208.98, "category": "post-transition-metal", "state": "solid", "discoveryYear": "1753", "funFact": "Has a low melting point and is used in cosmetics and some pharmaceuticals." },
-        { atomicNumber: 84, "symbol": "Po", "name": "Polonium", atomicMass: 209, "category: "metalloid", "state": "solid", "discoveryYear": "1898", "funFact": "Highly radioactive, discovered by Marie Curie." },
-        { atomicNumber: 85, "symbol": "At", "name": "Astatine", atomicMass: 210, "category": "halogen", "state": "solid", "discoveryYear": "1940", "funFact": "The rarest naturally occurring element on Earth." },
-        { atomicNumber: 86, "symbol": "Rn", "name": "Radon", atomicMass: 222, "category": "noble-gas", "state": "gas", "discoveryYear": "1900", "funFact": "A radioactive gas that can accumulate in homes, posing a health risk." },
-        { atomicNumber: 87, "symbol": "Fr", "name": "Francium", atomicMass: 223, "category": "alkali-metal", "state": "solid", "discoveryYear": "1939", "funFact": "The second-rarest naturally occurring element, extremely radioactive." },
-        { atomicNumber: 88, "symbol": "Ra", "name": "Radium", atomicMass: 226, "category": "alkaline-earth-metal", "state": "solid", "discoveryYear": "1898", "funFact": "Discovered by Marie Curie, used in luminous paints (now mostly phased out)." },
+        { atomicNumber: 84, "symbol": "Po", "name": "Polonium", atomicMass: 209, category: "metalloid", state: "solid", discoveryYear: "1898", funFact: "Highly radioactive, discovered by Marie Curie." },
+        { atomicNumber: 85, "symbol": "At", "name": "Astatine", atomicMass: 210, category: "halogen", state: "solid", discoveryYear: "1940", funFact: "The rarest naturally occurring element on Earth." },
+        { atomicNumber: 86, "symbol": "Rn", "name": "Radon", atomicMass: 222, category: "noble-gas", state: "gas", discoveryYear: "1900", funFact: "A radioactive gas that can accumulate in homes, posing a health risk." },
+        { atomicNumber: 87, "symbol": "Fr", "name": "Francium", atomicMass: 223, category: "alkali-metal", state: "solid", discoveryYear: "1939", funFact: "The second-rarest naturally occurring element, extremely radioactive." },
+        { atomicNumber: 88, "symbol": "Ra", "name": "Radium", atomicMass: 226, category: "alkaline-earth-metal", state: "solid", discoveryYear: "1898", funFact: "Discovered by Marie Curie, used in luminous paints (now mostly phased out)." },
         // Actinide Series - Typically placed below the main table
         { atomicNumber: 89, symbol: "Ac", name: "Actinium", atomicMass: 227, category: "actinide", state: "solid", discoveryYear: "1899", funFact: "Highly radioactive, glows in the dark due to its radioactivity." },
         { atomicNumber: 90, symbol: "Th", name: "Thorium", atomicMass: 232.038, category: "actinide", state: "solid", discoveryYear: "1828", funFact: "Potentially a future nuclear fuel source." },
@@ -189,7 +189,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // REVISED applyFilters function
     const applyFilters = () => {
         const selectedCategory = categoryFilter.value;
         const selectedState = stateFilter.value;
@@ -217,9 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
             periodicTableGrid.appendChild(card);
         });
 
-
         // Add Lanthanide and Actinide TEXT LABELS directly to the main grid
-        // These are not element cards, they are just labels to fill the space visually.
         const lanthanideLabel = document.createElement('div');
         lanthanideLabel.classList.add('lanthanide-label');
         lanthanideLabel.textContent = 'Lanthanides';
@@ -229,7 +226,6 @@ document.addEventListener('DOMContentLoaded', () => {
         actinideLabel.classList.add('actinide-label');
         actinideLabel.textContent = 'Actinides';
         periodicTableGrid.appendChild(actinideLabel);
-
 
         // Create and append the separate lanthanides/actinides block below the main table
         const lanthanidesActinidesBlock = document.createElement('div');
@@ -244,16 +240,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Only append the f-block container if it actually contains elements
-        // This prevents an empty block from appearing if all f-block elements are filtered out
         if (lanthanidesActinidesBlock.childElementCount > 0) {
             periodicTableGrid.appendChild(lanthanidesActinidesBlock);
         }
     };
-    // END REVISED applyFilters function
-
-
+    
     // Initial render
-    applyFilters(); // Call applyFilters to render with default "All" filters
+    applyFilters();
 
     // Add event listeners for filters
     categoryFilter.addEventListener('change', applyFilters);
