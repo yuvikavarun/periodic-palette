@@ -1,123 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Periodic Palette</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
-    html, body {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      background: #000;
-      font-family: 'Press Start 2P', monospace;
-      color: #fff;
-    }
-
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: -1;
-    }
-
-    .title {
-      text-align: center;
-      font-size: 24px;
-      margin-top: 30px;
-      text-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
-    }
-
-    .tagline {
-      text-align: center;
-      font-size: 12px;
-      margin-bottom: 20px;
-      color: #ccc;
-      text-shadow: 0 0 5px #999;
-    }
-
-    .table {
-      display: grid;
-      grid-template-columns: repeat(18, 1fr);
-      gap: 4px;
-      padding: 10px;
-      max-width: 1400px;
-      margin: auto;
-      font-size: 8px;
-    }
-
-    .element {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid #0ff;
-      padding: 4px;
-      text-align: center;
-      border-radius: 3px;
-      box-shadow: 0 0 5px #0ff;
-      line-height: 1.2;
-    }
-
-    footer {
-      text-align: center;
-      font-size: 10px;
-      margin: 30px 0;
-      color: #888;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Periodic Palette</title> <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Press+Start+2P&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
 </head>
-<body>
-  <canvas id="bg"></canvas>
-  <div class="title">Periodic Palette</div>
-  <div class="tagline">Explore the elements of our universe</div>
-  <div class="table" id="ptable"></div>
-  <footer>Developed by Yuvika V</footer>
+<body class="dark-theme">
+    <header class="container">
+        <h1 class="pixel-font-title"> Periodic Palette </h1>
+        <div class="header-controls">
+            <div id="random-element-of-day" class="random-element-card">
+                <h3>Random Element of the Day</h3>
+                <p id="random-element-info"></p>
+            </div>
+            <div class="search-and-theme">
+                <input type="text" id="search-bar" placeholder="Search element..." class="search-input">
+                <button id="theme-toggle" class="theme-toggle-button">Toggle Theme</button>
+            </div>
+        </div>
+    </header>
 
-  <script>
-    // Pixel starfield background
-    const canvas = document.getElementById('bg');
-    const ctx = canvas.getContext('2d');
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      drawStars();
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
+    <main class="container">
+        <aside class="filters">
+            <h2>Filters</h2>
+            <div class="filter-group">
+                <h3>Category:</h3>
+                <div id="category-filters" class="filter-options">
+                    </div>
+            </div>
+            <div class="filter-group">
+                <h3>Phase:</h3>
+                <div id="phase-filters" class="filter-options">
+                    <label><input type="checkbox" data-filter="phase" value="solid"> Solid</label>
+                    <label><input type="checkbox" data-filter="phase" value="liquid"> Liquid</label>
+                    <label><input type="checkbox" data-filter="phase" value="gas"> Gas</label>
+                    <label><input type="checkbox" data-filter="phase" value="unknown"> Unknown</label>
+                </div>
+            </div>
+        </aside>
 
-    function drawStars() {
-      const w = canvas.width;
-      const h = canvas.height;
-      ctx.fillStyle = '#000';
-      ctx.fillRect(0, 0, w, h);
+        <section id="periodic-table-grid" class="periodic-table-grid">
+            </section>
+    </main>
 
-      for (let i = 0; i < 300; i++) {
-        const x = Math.random() * w;
-        const y = Math.random() * h;
-        const size = Math.random() * 2;
-        ctx.fillStyle = Math.random() > 0.5 ? '#0ff' : '#f0f';
-        ctx.fillRect(x, y, size, size);
-      }
-    }
+    <div id="tooltip" class="element-tooltip">
+        </div>
 
-    const ptable = document.getElementById('ptable');
-    const elements = [
-      [1,"H","Hydrogen"],[2,"He","Helium"],[3,"Li","Lithium"],[4,"Be","Beryllium"],[5,"B","Boron"],[6,"C","Carbon"],[7,"N","Nitrogen"],[8,"O","Oxygen"],[9,"F","Fluorine"],[10,"Ne","Neon"],
-      [11,"Na","Sodium"],[12,"Mg","Magnesium"],[13,"Al","Aluminum"],[14,"Si","Silicon"],[15,"P","Phosphorus"],[16,"S","Sulfur"],[17,"Cl","Chlorine"],[18,"Ar","Argon"],
-      [19,"K","Potassium"],[20,"Ca","Calcium"],[21,"Sc","Scandium"],[22,"Ti","Titanium"],[23,"V","Vanadium"],[24,"Cr","Chromium"],[25,"Mn","Manganese"],[26,"Fe","Iron"],[27,"Co","Cobalt"],[28,"Ni","Nickel"],[29,"Cu","Copper"],[30,"Zn","Zinc"],[31,"Ga","Gallium"],[32,"Ge","Germanium"],[33,"As","Arsenic"],[34,"Se","Selenium"],[35,"Br","Bromine"],[36,"Kr","Krypton"],
-      [37,"Rb","Rubidium"],[38,"Sr","Strontium"],[39,"Y","Yttrium"],[40,"Zr","Zirconium"],[41,"Nb","Niobium"],[42,"Mo","Molybdenum"],[43,"Tc","Technetium"],[44,"Ru","Ruthenium"],[45,"Rh","Rhodium"],[46,"Pd","Palladium"],[47,"Ag","Silver"],[48,"Cd","Cadmium"],[49,"In","Indium"],[50,"Sn","Tin"],[51,"Sb","Antimony"],[52,"Te","Tellurium"],[53,"I","Iodine"],[54,"Xe","Xenon"],
-      [55,"Cs","Cesium"],[56,"Ba","Barium"],[57,"La","Lanthanum"],[58,"Ce","Cerium"],[59,"Pr","Praseodymium"],[60,"Nd","Neodymium"],[61,"Pm","Promethium"],[62,"Sm","Samarium"],[63,"Eu","Europium"],[64,"Gd","Gadolinium"],[65,"Tb","Terbium"],[66,"Dy","Dysprosium"],[67,"Ho","Holmium"],[68,"Er","Erbium"],[69,"Tm","Thulium"],[70,"Yb","Ytterbium"],[71,"Lu","Lutetium"],
-      [72,"Hf","Hafnium"],[73,"Ta","Tantalum"],[74,"W","Tungsten"],[75,"Re","Rhenium"],[76,"Os","Osmium"],[77,"Ir","Iridium"],[78,"Pt","Platinum"],[79,"Au","Gold"],[80,"Hg","Mercury"],[81,"Tl","Thallium"],[82,"Pb","Lead"],[83,"Bi","Bismuth"],[84,"Po","Polonium"],[85,"At","Astatine"],[86,"Rn","Radon"],
-      [87,"Fr","Francium"],[88,"Ra","Radium"],[89,"Ac","Actinium"],[90,"Th","Thorium"],[91,"Pa","Protactinium"],[92,"U","Uranium"],[93,"Np","Neptunium"],[94,"Pu","Plutonium"],[95,"Am","Americium"],[96,"Cm","Curium"],[97,"Bk","Berkelium"],[98,"Cf","Californium"],[99,"Es","Einsteinium"],[100,"Fm","Fermium"],[101,"Md","Mendelevium"],[102,"No","Nobelium"],[103,"Lr","Lawrencium"],
-      [104,"Rf","Rutherfordium"],[105,"Db","Dubnium"],[106,"Sg","Seaborgium"],[107,"Bh","Bohrium"],[108,"Hs","Hassium"],[109,"Mt","Meitnerium"],[110,"Ds","Darmstadtium"],[111,"Rg","Roentgenium"],[112,"Cn","Copernicium"],[113,"Nh","Nihonium"],[114,"Fl","Flerovium"],[115,"Mc","Moscovium"],[116,"Lv","Livermorium"],[117,"Ts","Tennessine"],[118,"Og","Oganesson"]
-    ];
+    <footer class="footer">
+        <p>Developed by Yuvika V</p>
+    </footer>
 
-    for (const [number, symbol, name] of elements) {
-      const el = document.createElement('div');
-      el.className = 'element';
-      el.innerHTML = `<strong>${symbol}</strong><br>${number}<br>${name}`;
-      ptable.appendChild(el);
-    }
-  </script>
+    <script src="script.js"></script>
 </body>
 </html>
