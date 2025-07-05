@@ -5,42 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Periodic Palette</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Press+Start+2P&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
 </head>
-<body class="dark-theme">
-    <header class="container">
-        <h1 class="pixel-font-title">🎨 Periodic Palette 🧪</h1>
-        <div class="header-controls">
-            <div id="random-element-of-day" class="random-element-card">
-                <h3>Random Element of the Day</h3>
-                <p id="random-element-info"></p>
+<body>
+    <div class="container">
+        <h1>Periodic Palette</h1>
+
+        <div class="filters">
+            <div class="filter-group">
+                <label for="category-filter">Category:</label>
+                <select id="category-filter">
+                    <option value="all">All Categories</option>
+                    <option value="alkali-metal">Alkali Metals</option>
+                    <option value="alkaline-earth-metal">Alkaline Earth Metals</option>
+                    <option value="transition-metal">Transition Metals</option>
+                    <option value="post-transition-metal">Post-Transition Metals</option>
+                    <option value="metalloid">Metalloids</option>
+                    <option value="nonmetal">Nonmetals</option>
+                    <option value="halogen">Halogens</option>
+                    <option value="noble-gas">Noble Gases</option>
+                    <option value="lanthanide">Lanthanides</option>
+                    <option value="actinide">Actinides</option>
+                </select>
             </div>
-            <div class="search-and-theme">
-                <input type="text" id="search-bar" placeholder="Search element..." class="search-input">
-                <button id="theme-toggle" class="theme-toggle-button">Toggle Theme</button>
+            <div class="filter-group">
+                <label for="state-filter">State at Room Temp:</label>
+                <select id="state-filter">
+                    <option value="all">All States</option>
+                    <option value="solid">Solid</option>
+                    <option value="liquid">Liquid</option>
+                    <option value="gas">Gas</option>
+                </select>
             </div>
         </div>
-    </header>
 
-    <main class="container">
-        <aside class="filters">
-            <h2>Filters</h2>
-            <p>No specific filters available with current data.</p>
-            <p>Use the search bar above!</p>
-        </aside>
+        <div id="periodic-table-grid">
+            </div>
+    </div>
 
-        <section id="periodic-table-grid" class="periodic-table-grid">
-            </section>
-    </main>
-
-    <div id="tooltip" class="element-tooltip">
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 id="modal-element-name"></h2>
+            <p><strong>Symbol:</strong> <span id="modal-element-symbol"></span></p>
+            <p><strong>Atomic Number:</strong> <span id="modal-element-atomic-number"></span></p>
+            <p><strong>Atomic Mass:</strong> <span id="modal-element-atomic-mass"></span></p>
+            <p><strong>Category:</strong> <span id="modal-element-category"></span></p>
+            <p><strong>State at Room Temp:</strong> <span id="modal-element-state"></span></p>
+            <p><strong>Discovery Year:</strong> <span id="modal-element-discovery-year"></span></p>
+            <p><strong>Fun Fact:</strong> <span id="modal-element-fun-fact"></span></p>
         </div>
-
-    <footer class="footer">
-        <p>Developed by Yuvika V</p>
-    </footer>
+    </div>
 
     <script src="script.js"></script>
 </body>
