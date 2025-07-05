@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const periodicTableGrid = document.getElementById('periodic-table-grid');
     const categoryFilter = document.getElementById('category-filter');
     const stateFilter = document.getElementById('state-filter');
+    const colorIndexDiv = document.getElementById('color-index'); // Get the new color index div
 
     const modal = document.getElementById('modal');
     const closeButton = document.querySelector('.close-button');
@@ -72,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { atomicNumber: 54, symbol: "Xe", name: "Xenon", atomicMass: 131.29, category: "noble-gas", state: "gas", discoveryYear: "1898", funFact: "Used in high-intensity discharge lamps and some spacecraft propulsion systems." },
         { atomicNumber: 55, symbol: "Cs", name: "Cesium", atomicMass: 132.91, category: "alkali-metal", state: "solid", discoveryYear: "1860", funFact: "The most reactive metal; used in atomic clocks due to its precise vibrations." },
         { atomicNumber: 56, symbol: "Ba", name: "Barium", atomicMass: 137.33, category: "alkaline-earth-metal", state: "solid", discoveryYear: "1808", funFact: "Used in medical imaging for X-rays of the digestive system." },
-        // Lanthanide Series - Typically placed below the main table
+        // Lanthanide Series - These will be in the separate block below
         { atomicNumber: 57, symbol: "La", name: "Lanthanum", atomicMass: 138.91, category: "lanthanide", state: "solid", discoveryYear: "1839", funFact: "Used in camera lenses and lighter flints." },
         { atomicNumber: 58, symbol: "Ce", name: "Cerium", atomicMass: 140.12, category: "lanthanide", state: "solid", discoveryYear: "1803", funFact: "Used in catalytic converters and self-cleaning ovens." },
         { atomicNumber: 59, symbol: "Pr", name: "Praseodymium", atomicMass: 140.91, category: "lanthanide", state: "solid", discoveryYear: "1885", funFact: "Used in special glasses that filter out yellow light." },
@@ -106,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { atomicNumber: 86, "symbol": "Rn", "name": "Radon", atomicMass: 222, category: "noble-gas", state: "gas", discoveryYear: "1900", funFact: "A radioactive gas that can accumulate in homes, posing a health risk." },
         { atomicNumber: 87, "symbol": "Fr", "name": "Francium", atomicMass: 223, category: "alkali-metal", state: "solid", discoveryYear: "1939", funFact: "The second-rarest naturally occurring element, extremely radioactive." },
         { atomicNumber: 88, "symbol": "Ra", "name": "Radium", atomicMass: 226, category: "alkaline-earth-metal", state: "solid", discoveryYear: "1898", funFact: "Discovered by Marie Curie, used in luminous paints (now mostly phased out)." },
-        // Actinide Series - Typically placed below the main table
+        // Actinide Series - These will be in the separate block below
         { atomicNumber: 89, symbol: "Ac", name: "Actinium", atomicMass: 227, category: "actinide", state: "solid", discoveryYear: "1899", funFact: "Highly radioactive, glows in the dark due to its radioactivity." },
         { atomicNumber: 90, symbol: "Th", name: "Thorium", atomicMass: 232.038, category: "actinide", state: "solid", discoveryYear: "1828", funFact: "Potentially a future nuclear fuel source." },
         { atomicNumber: 91, symbol: "Pa", name: "Protactinium", atomicMass: 231.036, category: "actinide", state: "solid", discoveryYear: "1913", funFact: "Highly toxic and radioactive, very difficult to handle." },
@@ -189,42 +190,76 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Function to generate and display the color index
+    const generateColorIndex = () => {
+        colorIndexDiv.innerHTML = ''; // Clear existing content
+        const categories = [...new Set(elements.map(e => e.category))]; // Get unique categories
+
+        // Define display names for categories for better readability
+        const categoryDisplayNames = {
+            "alkali-metal": "Alkali Metals",
+            "alkaline-earth-metal": "Alkaline Earth Metals",
+            "transition-metal": "Transition Metals",
+            "post-transition-metal": "Post-Transition Metals",
+            "metalloid": "Metalloids",
+            "nonmetal": "Nonmetals",
+            "halogen": "Halogens",
+            "noble-gas": "Noble Gases",
+            "lanthanide": "Lanthanides",
+            "actinide": "Actinides",
+            "unknown": "Unknown" // Fallback for any 'unknown' category
+        };
+
+        categories.sort((a, b) => categoryDisplayNames[a].localeCompare(categoryDisplayNames[b])); // Sort alphabetically by display name
+
+        categories.forEach(category => {
+            const item = document.createElement('div');
+            item.classList.add('color-index-item');
+
+            const swatch = document.createElement('div');
+            swatch.classList.add('color-swatch');
+            swatch.classList.add(`swatch-${category.replace(/\s+/g, '-')}`); // Add class for CSS color
+
+            const text = document.createElement('span');
+            text.textContent = categoryDisplayNames[category] || category.replace(/-/g, ' ').split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+
+            item.appendChild(swatch);
+            item.appendChild(text);
+            colorIndexDiv.appendChild(item);
+        });
+    };
+
+
     const applyFilters = () => {
         const selectedCategory = categoryFilter.value;
         const selectedState = stateFilter.value;
 
         periodicTableGrid.innerHTML = ''; // Clear existing elements
 
-        // Create a temporary array to hold all element cards (hidden or not)
-        const elementCards = [];
-        elements.forEach(element => {
-            const card = generateElementCard(element);
+        // Filter elements based on selection
+        const filteredElements = elements.filter(element => {
             const matchesCategory = selectedCategory === 'all' || element.category === selectedCategory;
             const matchesState = selectedState === 'all' || element.state === selectedState;
-
-            if (!matchesCategory || !matchesState) {
-                card.classList.add('hidden'); // Hide elements that don't match filters
-            }
-            elementCards.push(card);
+            return matchesCategory && matchesState;
         });
 
         // Add main block elements to the grid first
-        elementCards.filter(card => {
-            const category = card.getAttribute('data-category');
-            return !(category === 'lanthanide' || category === 'actinide');
-        }).forEach(card => {
-            periodicTableGrid.appendChild(card);
+        filteredElements.filter(element => {
+            return !(element.category === 'lanthanide' || element.category === 'actinide');
+        }).forEach(element => {
+            periodicTableGrid.appendChild(generateElementCard(element));
         });
 
         // Add Lanthanide and Actinide TEXT LABELS directly to the main grid
+        // These will occupy the placeholder positions as defined by their CSS grid-row/column
         const lanthanideLabel = document.createElement('div');
         lanthanideLabel.classList.add('lanthanide-label');
-        lanthanideLabel.textContent = 'Lanthanides';
+        lanthanideLabel.textContent = '57-71'; // More precise label
         periodicTableGrid.appendChild(lanthanideLabel);
 
         const actinideLabel = document.createElement('div');
         actinideLabel.classList.add('actinide-label');
-        actinideLabel.textContent = 'Actinides';
+        actinideLabel.textContent = '89-103'; // More precise label
         periodicTableGrid.appendChild(actinideLabel);
 
         // Create and append the separate lanthanides/actinides block below the main table
@@ -232,21 +267,23 @@ document.addEventListener('DOMContentLoaded', () => {
         lanthanidesActinidesBlock.classList.add('lanthanides-actinides');
         lanthanidesActinidesBlock.id = 'lanthanides-actinides-block';
 
-        elementCards.filter(card => {
-            const category = card.getAttribute('data-category');
+        filteredElements.filter(element => {
+            const category = element.category;
             return (category === 'lanthanide' || category === 'actinide');
-        }).forEach(card => {
-            lanthanidesActinidesBlock.appendChild(card);
+        }).forEach(element => {
+            lanthanidesActinidesBlock.appendChild(generateElementCard(element));
         });
 
         // Only append the f-block container if it actually contains elements
-        if (lanthanidesActinidesBlock.childElementCount > 0) {
+        // OR if the 'all' category is selected (to maintain structure)
+        if (lanthanidesActinidesBlock.childElementCount > 0 || selectedCategory === 'all') {
             periodicTableGrid.appendChild(lanthanidesActinidesBlock);
         }
     };
     
-    // Initial render
-    applyFilters();
+    // Initial render calls
+    generateColorIndex(); // Generate color index on load
+    applyFilters(); // Apply filters and render periodic table on load
 
     // Add event listeners for filters
     categoryFilter.addEventListener('change', applyFilters);
