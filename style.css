@@ -26,16 +26,16 @@ body {
     margin: 0;
     padding: 20px;
     display: flex;
-    flex-direction: column; /* Changed to column for footer */
-    justify-content: space-between; /* Distribute space for footer */
-    align-items: center;
-    min-height: 100vh;
+    flex-direction: column; /* Arrange items in a column */
+    justify-content: space-between; /* Push content to top, footer to bottom */
+    min-height: 100vh; /* Ensure body takes at least full viewport height */
     box-sizing: border-box;
 }
 
 .container {
     max-width: 1400px;
     width: 100%;
+    margin: 0 auto; /* Center the container horizontally */
     background-color: rgba(0, 0, 0, 0.3); /* Slightly transparent overlay for content */
     border-radius: 15px;
     padding: 30px;
@@ -44,7 +44,7 @@ body {
     flex-grow: 1; /* Allow container to grow and push footer down */
 }
 
-h1 {
+h1.pixel-font { /* Changed to h1.pixel-font for specificity */
     font-family: 'Press Start 2P', cursive; /* Minecraft pixel font */
     text-align: center;
     color: var(--text-color-light);
@@ -98,7 +98,7 @@ h1 {
     padding: 10px;
     border-radius: 10px;
     overflow-x: auto;
-    min-height: 700px; /* Keep this for consistent height, elements will be hidden */
+    min-height: 700px; /* Keep this for consistent height */
     position: relative;
 }
 
@@ -268,17 +268,18 @@ h1 {
 .lanthanide-label,
 .actinide-label {
     grid-column: 3 / span 10; /* Span columns where f-block would be */
-    padding: 5px;
+    padding: 3px; /* Reduced padding */
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 0.8em;
+    font-size: 0.7em; /* Smaller font size */
     font-weight: bold;
-    color: rgba(255, 255, 255, 0.6); /* Softer text color */
-    background-color: rgba(40, 20, 80, 0.4); /* Very subtle background */
-    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.5); /* Even softer text color */
+    background-color: rgba(40, 20, 80, 0.2); /* Even more subtle background */
+    border-radius: 6px; /* Slightly smaller border radius */
     text-align: center;
     pointer-events: none; /* Make sure it's not clickable */
+    user-select: none; /* Prevent text selection */
 }
 
 .lanthanide-label {
@@ -413,7 +414,7 @@ footer {
     color: rgba(255, 255, 255, 0.5);
     font-size: 0.9em;
     text-align: center;
-    width: 100%;
+    width: 100%; /* Ensure footer spans full width */
     box-sizing: border-box;
 }
 
@@ -422,7 +423,7 @@ footer {
     #periodic-table-grid {
         grid-template-columns: repeat(18, minmax(60px, 1fr)); /* Allow smaller cards */
     }
-    h1 {
+    h1.pixel-font { /* Adjusted for specificity */
         font-size: 2em;
     }
 }
@@ -442,7 +443,7 @@ footer {
     .container {
         padding: 20px;
     }
-    h1 {
+    h1.pixel-font { /* Adjusted for specificity */
         font-size: 1.8em;
     }
 }
@@ -454,7 +455,7 @@ footer {
     .container {
         padding: 15px;
     }
-    h1 {
+    h1.pixel-font { /* Adjusted for specificity */
         font-size: 1.5em;
     }
     .filters {
@@ -486,12 +487,13 @@ footer {
     }
     .lanthanide-label,
     .actinide-label {
-        font-size: 0.7em;
+        font-size: 0.6em; /* Even smaller for consistency */
+        padding: 2px;
     }
 }
 
 @media (max-width: 480px) {
-    h1 {
+    h1.pixel-font { /* Adjusted for specificity */
         font-size: 1.2em; /* Smaller for very small screens */
     }
     .filter-group select {
