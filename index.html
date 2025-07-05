@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Periodic Palette</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts: JetBrains Mono, Quicksand, and Press Start 2P for pixel theme -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Quicksand:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1>Periodic Palette</h1>
+        <h1 class="pixel-font">Periodic Palette</h1>
 
         <div class="filters">
             <div class="filter-group">
@@ -40,7 +41,8 @@
         </div>
 
         <div id="periodic-table-grid">
-            </div>
+            <!-- Elements and labels will be dynamically loaded here by JavaScript -->
+        </div>
     </div>
 
     <div id="modal" class="modal">
@@ -56,6 +58,10 @@
             <p><strong>Fun Fact:</strong> <span id="modal-element-fun-fact"></span></p>
         </div>
     </div>
+
+    <footer>
+        Developed by Yuvika V
+    </footer>
 
     <script src="script.js"></script>
 </body>
