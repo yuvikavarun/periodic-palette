@@ -1,0 +1,485 @@
+/* General Body and Dark Theme */
+body {
+    font-family: 'Space Grotesk', sans-serif;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s, color 0.3s;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: #e0e0e0; /* Light grey text */
+    background: #0d0d1a; /* Very dark blue/purple */
+    background: linear-gradient(135deg, #0d0d1a 0%, #1a0a2a 100%); /* Subtle gradient */
+    overflow-x: hidden;
+}
+
+body.light-theme {
+    color: #333;
+    background: #f0f8ff;
+    background: linear-gradient(135deg, #f0f8ff 0%, #e0f2f7 100%);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+header {
+    text-align: center;
+    padding: 30px 20px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* New style for the pixel font title */
+.pixel-font-title {
+    font-family: 'Press Start 2P', cursive; /* Apply the pixel font */
+    font-size: 2.5em; /* Adjust size as needed for pixel clarity */
+    color: #8be9fd; /* Light blue for title */
+    text-shadow: 0 0 15px rgba(139, 233, 253, 0.6);
+    margin-bottom: 20px;
+    letter-spacing: 2px; /* Add a little space for pixel fonts */
+    word-break: break-word; /* Ensure it wraps on smaller screens */
+    line-height: 1.2;
+}
+
+/* Original h1 rule removed or modified to use .pixel-font-title if it existed */
+/* If you had 'header h1' before, replace its font-family etc. with .pixel-font-title */
+
+
+.header-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.random-element-card {
+    background: rgba(40, 44, 52, 0.7);
+    border: 1px solid rgba(139, 233, 253, 0.3);
+    border-radius: 10px;
+    padding: 15px 25px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    width: 100%;
+    max-width: 350px;
+}
+
+.random-element-card h3 {
+    color: #f1fa8c; /* Yellowish */
+    margin-top: 0;
+    font-size: 1.2em;
+}
+
+.random-element-card p {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #bd93f9; /* Purple */
+}
+
+.search-and-theme {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.search-input {
+    flex-grow: 1;
+    padding: 12px 20px;
+    border-radius: 25px;
+    border: 1px solid #6272a4;
+    background-color: #282a36;
+    color: #f8f8f2;
+    font-size: 1em;
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+.search-input:focus {
+    border-color: #8be9fd;
+    box-shadow: 0 0 10px rgba(139, 233, 253, 0.5);
+}
+
+.theme-toggle-button {
+    background-color: #bd93f9;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease, transform 0.2s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.theme-toggle-button:hover {
+    background-color: #ff79c6;
+    transform: translateY(-2px);
+}
+
+body.light-theme .search-input {
+    background-color: #fff;
+    color: #333;
+    border-color: #ccc;
+    box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .search-input:focus {
+    border-color: #6272a4;
+    box-shadow: 0 0 10px rgba(98, 114, 164, 0.5);
+}
+
+body.light-theme .theme-toggle-button {
+    background-color: #6272a4;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+body.light-theme .theme-toggle-button:hover {
+    background-color: #44475a;
+}
+
+/* Main Content Area */
+main {
+    display: flex;
+    gap: 25px;
+    flex-grow: 1; /* Allow main content to grow and push footer down */
+}
+
+/* Filters Sidebar */
+.filters {
+    flex: 0 0 250px; /* Fixed width sidebar */
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    min-height: 600px; /* Ensure it takes up some height */
+}
+
+.filters h2 {
+    font-family: 'Orbitron', sans-serif;
+    color: #50fa7b; /* Greenish */
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.6em;
+    text-align: center;
+}
+
+.filter-group {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.filter-group:last-child {
+    border-bottom: none;
+}
+
+.filter-group h3 {
+    color: #ffb86c; /* Orangeish */
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+.filter-options label {
+    display: block;
+    margin-bottom: 8px;
+    cursor: pointer;
+    font-size: 0.95em;
+    color: #e0e0e0;
+    transition: color 0.2s;
+}
+
+.filter-options label:hover {
+    color: #8be9fd;
+}
+
+.filter-options input[type="checkbox"] {
+    margin-right: 8px;
+    accent-color: #bd93f9; /* Purple accent for checkboxes */
+}
+
+body.light-theme .filters {
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .filters h2 {
+    color: #44475a;
+}
+
+body.light-theme .filter-group h3 {
+    color: #6272a4;
+}
+
+body.light-theme .filter-options label {
+    color: #555;
+}
+
+/* Periodic Table Grid */
+.periodic-table-grid {
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: repeat(18, 1fr); /* 18 columns for the periodic table */
+    gap: 8px; /* Spacing between element cards */
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    align-items: start; /* Align items to the start of their grid area */
+}
+
+body.light-theme .periodic-table-grid {
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Element Card */
+.element-card {
+    background-color: #44475a; /* Default element background */
+    border-radius: 8px;
+    padding: 8px 5px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    min-height: 70px; /* Ensure consistent height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.85em;
+    line-height: 1.2;
+}
+
+.element-card .atomic-number {
+    font-size: 0.7em;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.element-card .symbol {
+    font-size: 1.8em;
+    font-weight: bold;
+    margin-top: 5px;
+    color: #f8f8f2;
+}
+
+.element-card .name {
+    font-size: 0.75em;
+    color: rgba(255, 255, 255, 0.8);
+    word-break: break-word; /* Ensure long names wrap */
+    padding: 0 2px;
+}
+
+.element-card:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    z-index: 10; /* Bring hovered card to front */
+}
+
+/* Color-coding by category */
+/* Example colors, adjust as needed for aesthetic */
+.category-alkali-metal { background-color: #ff6e6e; } /* Reddish */
+.category-alkaline-earth-metal { background-color: #f1fa8c; } /* Yellowish */
+.category-transition-metal { background-color: #bd93f9; } /* Purple */
+.category-post-transition-metal { background-color: #8be9fd; } /* Light Blue */
+.category-metalloid { background-color: #50fa7b; } /* Green */
+.category-nonmetal { background-color: #ff79c6; } /* Pink */
+.category-noble-gas { background-color: #8be9fd; } /* Light Blue (same as post-transition for now, adjust) */
+.category-lanthanide { background-color: #ffb86c; } /* Orange */
+.category-actinide { background-color: #ff9f80; } /* Coral */
+.category-unknown { background-color: #6272a4; } /* Greyish Blue */
+
+body.light-theme .element-card {
+    background-color: #f0f0f0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+body.light-theme .element-card .atomic-number {
+    color: rgba(51, 51, 51, 0.7);
+}
+
+body.light-theme .element-card .symbol {
+    color: #1a1a1a;
+}
+
+body.light-theme .element-card .name {
+    color: rgba(51, 51, 51, 0.8);
+}
+
+/* Tooltip/Popup */
+.element-tooltip {
+    position: absolute;
+    background-color: rgba(40, 44, 52, 0.95);
+    border: 1px solid #8be9fd;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
+    color: #f8f8f2;
+    z-index: 1000;
+    pointer-events: none; /* Allows clicks to pass through when not active */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+    max-width: 300px;
+    text-align: left;
+    backdrop-filter: blur(5px); /* Frosted glass effect */
+}
+
+.element-tooltip.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.element-tooltip h4 {
+    color: #50fa7b;
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 1.3em;
+}
+
+.element-tooltip p {
+    margin: 5px 0;
+    font-size: 0.95em;
+}
+
+.element-tooltip p strong {
+    color: #f1fa8c;
+}
+
+.element-tooltip .fact {
+    margin-top: 10px;
+    font-style: italic;
+    color: #bd93f9;
+    font-size: 0.9em;
+}
+
+body.light-theme .element-tooltip {
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 1px solid #6272a4;
+    color: #333;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+body.light-theme .element-tooltip h4 {
+    color: #44475a;
+}
+
+body.light-theme .element-tooltip p strong {
+    color: #6272a4;
+}
+
+body.light-theme .element-tooltip .fact {
+    color: #555;
+}
+
+/* Footer Styles */
+.footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px; /* Space above the footer */
+    background: rgba(0, 0, 0, 0.2);
+    color: #6272a4; /* A subtle grey-blue for footer text */
+    font-size: 0.9em;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .footer {
+    background: rgba(255, 255, 255, 0.5);
+    color: #555;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    main {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .filters {
+        flex: none;
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .periodic-table-grid {
+        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)); /* More flexible grid */
+        gap: 6px;
+    }
+
+    .element-card {
+        min-height: 60px;
+        font-size: 0.75em;
+        padding: 6px 3px;
+    }
+
+    .element-card .symbol {
+        font-size: 1.5em;
+    }
+}
+
+@media (max-width: 768px) {
+    .pixel-font-title { /* Adjust font size for smaller screens */
+        font-size: 1.8em;
+    }
+
+    .header-controls {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .search-and-theme {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-input, .theme-toggle-button {
+        width: 100%;
+    }
+
+    .filters h2 {
+        font-size: 1.4em;
+    }
+
+    .periodic-table-grid {
+        grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+        gap: 4px;
+    }
+
+    .element-card {
+        min-height: 50px;
+        font-size: 0.7em;
+        padding: 4px 2px;
+    }
+
+    .element-card .symbol {
+        font-size: 1.3em;
+    }
+
+    .element-card .atomic-number {
+        font-size: 0.6em;
+        top: 3px;
+        left: 3px;
+    }
+
+    .element-card .name {
+        font-size: 0.65em;
+    }
+}
