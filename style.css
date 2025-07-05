@@ -48,9 +48,17 @@ h1.pixel-font {
     font-family: 'Press Start 2P', cursive; /* Minecraft pixel font */
     text-align: center;
     color: var(--text-color-light);
-    margin-bottom: 30px;
+    margin-bottom: 10px; /* Reduced margin to fit tagline */
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
     font-size: 2.5em; /* Adjust size for pixel font */
+}
+
+.tagline {
+    font-family: 'Quicksand', sans-serif;
+    text-align: center;
+    font-size: 1.1em;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 30px;
 }
 
 .filters {
@@ -58,7 +66,7 @@ h1.pixel-font {
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
-    margin-bottom: 30px;
+    margin-bottom: 20px; /* Reduced margin to fit color index */
 }
 
 .filter-group label {
@@ -89,6 +97,46 @@ h1.pixel-font {
     border-color: rgba(255, 255, 255, 0.4);
     box-shadow: var(--hover-glow);
 }
+
+/* Color Index Styling */
+.color-index {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px; /* Space between each color item */
+    margin-bottom: 30px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+    font-size: 0.9em; /* Same size as other texts */
+}
+
+.color-index-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.color-swatch {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Color swatch backgrounds - dynamically set by JS, but defined here for consistency */
+.swatch-alkali-metal { background-color: var(--color-alkali-metal); }
+.swatch-alkaline-earth-metal { background-color: var(--color-alkaline-earth-metal); }
+.swatch-transition-metal { background-color: var(--color-transition-metal); }
+.swatch-post-transition-metal { background-color: var(--color-post-transition-metal); }
+.swatch-metalloid { background-color: var(--color-metalloid); }
+.swatch-nonmetal { background-color: var(--color-nonmetal); }
+.swatch-halogen { background-color: var(--color-halogen); }
+.swatch-noble-gas { background-color: var(--color-noble-gas); }
+.swatch-lanthanide { background-color: var(--color-lanthanide); }
+.swatch-actinide { background-color: var(--color-actinide); }
+.swatch-unknown { background-color: var(--color-unknown); }
+
 
 #periodic-table-grid {
     display: grid;
@@ -228,7 +276,7 @@ h1.pixel-font {
 .element-card[data-atomic-number="54"] { grid-column: 18; grid-row: 5; }
 .element-card[data-atomic-number="55"] { grid-column: 1; grid-row: 6; }
 .element-card[data-atomic-number="56"] { grid-column: 2; grid-row: 6; }
-/* Lanthanides (57-71) are placed in the separate block below, so this space is for the label */
+/* Lanthanide label placeholder */
 .element-card[data-atomic-number="72"] { grid-column: 4; grid-row: 6; }
 .element-card[data-atomic-number="73"] { grid-column: 5; grid-row: 6; }
 .element-card[data-atomic-number="74"] { grid-column: 6; grid-row: 6; }
@@ -246,7 +294,7 @@ h1.pixel-font {
 .element-card[data-atomic-number="86"] { grid-column: 18; grid-row: 6; }
 .element-card[data-atomic-number="87"] { grid-column: 1; grid-row: 7; }
 .element-card[data-atomic-number="88"] { grid-column: 2; grid-row: 7; }
-/* Actinides (89-103) are placed in the separate block below, so this space is for the label */
+/* Actinide label placeholder */
 .element-card[data-atomic-number="104"] { grid-column: 4; grid-row: 7; }
 .element-card[data-atomic-number="105"] { grid-column: 5; grid-row: 7; }
 .element-card[data-atomic-number="106"] { grid-column: 6; grid-row: 7; }
@@ -264,19 +312,20 @@ h1.pixel-font {
 .element-card[data-atomic-number="118"] { grid-column: 18; grid-row: 7; }
 
 
-/* New styles for Lanthanide/Actinide text labels */
+/* Styles for Lanthanide/Actinide text labels - these indicate the series location */
 .lanthanide-label,
 .actinide-label {
+    /* Position them in the main grid where the La/Ac placeholder would be */
     grid-column: 3 / span 10; /* Span columns where f-block would be */
-    padding: 3px; /* Reduced padding */
+    padding: 5px; /* Adjust padding as needed */
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 0.7em; /* Smaller font size */
+    font-size: 0.8em; /* Slightly larger for visibility */
     font-weight: bold;
-    color: rgba(255, 255, 255, 0.5); /* Even softer text color */
-    background-color: rgba(40, 20, 80, 0.2); /* Even more subtle background */
-    border-radius: 6px; /* Slightly smaller border radius */
+    color: rgba(255, 255, 255, 0.6); /* Softer text color */
+    background-color: rgba(40, 20, 80, 0.3); /* Subtle background */
+    border-radius: 8px;
     text-align: center;
     pointer-events: none; /* Make sure it's not clickable */
     user-select: none; /* Prevent text selection */
@@ -289,7 +338,6 @@ h1.pixel-font {
 .actinide-label {
     grid-row: 7; /* Position in the 7th row of the main grid */
 }
-
 
 /* Lanthanides and Actinides block - placed below the main table */
 .lanthanides-actinides {
@@ -426,6 +474,14 @@ footer {
     h1.pixel-font {
         font-size: 2em;
     }
+    .color-index {
+        font-size: 0.8em;
+        gap: 10px;
+    }
+    .color-swatch {
+        width: 15px;
+        height: 15px;
+    }
 }
 
 @media (max-width: 992px) {
@@ -446,6 +502,18 @@ footer {
     h1.pixel-font {
         font-size: 1.8em;
     }
+    .tagline {
+        font-size: 1em;
+    }
+    .color-index {
+        font-size: 0.75em;
+        gap: 8px;
+        padding: 8px;
+    }
+    .color-swatch {
+        width: 14px;
+        height: 14px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -457,6 +525,9 @@ footer {
     }
     h1.pixel-font {
         font-size: 1.5em;
+    }
+    .tagline {
+        font-size: 0.9em;
     }
     .filters {
         flex-direction: column;
@@ -490,11 +561,23 @@ footer {
         font-size: 0.6em; /* Even smaller for consistency */
         padding: 2px;
     }
+    .color-index {
+        font-size: 0.7em;
+        gap: 6px;
+        padding: 6px;
+    }
+    .color-swatch {
+        width: 12px;
+        height: 12px;
+    }
 }
 
 @media (max-width: 480px) {
     h1.pixel-font {
         font-size: 1.2em; /* Smaller for very small screens */
+    }
+    .tagline {
+        font-size: 0.8em;
     }
     .filter-group select {
         width: 100%;
@@ -516,5 +599,14 @@ footer {
     }
     footer {
         font-size: 0.7em;
+    }
+    .color-index {
+        font-size: 0.6em;
+        gap: 4px;
+        padding: 4px;
+    }
+    .color-swatch {
+        width: 10px;
+        height: 10px;
     }
 }
