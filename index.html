@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Periodic Palette</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2215%22 fill=%22%2364b3f4%22/><circle cx=%2250%22 cy=%2230%22 r=%225%22 fill=%22%23ff6b6b%22/><circle cx=%2270%22 cy=%2260%22 r=%225%22 fill=%22%23ff6b6b%22/><circle cx=%2230%22 cy=%2260%22 r=%225%22 fill=%22%23ff6b6b%22/><ellipse cx=%2250%22 cy=%2250%22 rx=%2225%22 ry=%2210%22 fill=%22none%22 stroke=%22%23ffffff%22 stroke-width=%222%22/><ellipse cx=%2250%22 cy=%2250%22 rx=%2210%22 ry=%2225%22 fill=%22none%22 stroke=%22%23ffffff%22 stroke-width=%222%22/></svg>" type="image/svg+xml">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: #000000;
+            min-height: 100vh;
+            color: #ffffff;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        #cosmic-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-family: 'Courier New', monospace;
+            font-size: 4.5rem;
+            font-weight: 900;
+            color: #bb44ff;
+            text-shadow: 
+                0 0 10px #bb44ff,
+                0 0 20px #bb44ff,
+                0 0 40px #bb44ff,
+                0 0 80px #bb44ff,
+                0 0 120px #bb44ff;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            -webkit-font-smoothing: none;
+            font-smooth: never;
+            image-rendering: pixelated;
+            position: relative;
+        }
+
+        .header h1::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            right: -15px;
+            bottom: -15px;
+            background: linear-gradient(45deg, transparent, rgba(187, 68, 255, 0.1), transparent);
+            border-radius: 20px;
+            z-index: -1;
+            animation: pulse 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            color: #c2c2c2;
+        }
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(187, 68, 255, 0.3);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(45deg, #bb44ff, #9933cc);
+            color: white;
+            border-color: #bb44ff;
+            box-shadow: 0 0 20px rgba(187, 68, 255, 0.5);
+        }
+
+        .periodic-table {
+            display: grid;
+            grid-template-columns: repeat(18, 1fr);
+            gap: 6px;
+            margin-bottom: 30px;
+            min-width: 1200px;
+            max-width: 1600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .element {
+            width: 100%;
+            height: 80px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 8px;
+        }
+
+        .element:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+        }
+
+        .element.hidden {
+            opacity: 0.2;
+            filter: grayscale(1);
+        }
+
+        .atomic-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 300;
+            position: absolute;
+            top: 4px;
+            left: 6px;
+            opacity: 0.8;
+        }
+
+        .symbol {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .name {
+            font-size: 0.65rem;
+            font-weight: 400;
+            opacity: 0.9;
+            line-height: 1.2;
+        }
+
+        /* Element Categories */
+        .alkali-metals { background: linear-gradient(135deg, #ff6b6b, #ff8e8e); }
+        .alkaline-earth { background: linear-gradient(135deg, #4ecdc4, #44a08d); }
+        .transition-metals { background: linear-gradient(135deg, #45b7d1, #96c93d); }
+        .post-transition { background: linear-gradient(135deg, #f093fb, #f5576c); }
+        .metalloids { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+        .nonmetals { background: linear-gradient(135deg, #a8edea, #fed6e3); }
+        .halogens { background: linear-gradient(135deg, #ffecd2, #fcb69f); }
+        .noble-gases { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .lanthanides { background: linear-gradient(135deg, #fa709a, #fee140); }
+        .actinides { background: linear-gradient(135deg, #fdbb2d, #22c1c3); }
+
+        .empty-cell {
+            background: transparent;
+            border: none;
+            cursor: default;
+        }
+
+        .empty-cell:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #ffffff;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #bb44ff;
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-symbol {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .modal-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .modal-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .detail-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .detail-label {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .fun-fact {
+            background: rgba(187, 68, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #bb44ff;
+        }
+
+        .fun-fact-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #bb44ff;
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 1250px) {
+            .periodic-table {
+                min-width: 1000px;
+            }
+            
+            .symbol {
+                font-size: 1.2rem;
+            }
+            
+            .name {
+                font-size: 0.55rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+                letter-spacing: 4px;
+            }
+            
+            .filters {
+                gap: 10px;
+            }
+            
+            .filter-btn {
+                padding: 8px 16px;
+                font-size: 0.8rem;
+            }
+            
+            .modal-content {
+                padding: 20px;
+            }
+            
+            .modal-symbol {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="cosmic-background"></canvas>
+    
+    <div class="container">
+        <div class="header">
+            <h1>Periodic Palette</h1>
+            <p>Explore the elements of the universe</p>
+        </div>
+
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">All Elements</button>
+            <button class="filter-btn" data-filter="alkali-metals">Alkali Metals</button>
+            <button class="filter-btn" data-filter="alkaline-earth">Alkaline Earth</button>
+            <button class="filter-btn" data-filter="transition-metals">Transition Metals</button>
+            <button class="filter-btn" data-filter="halogens">Halogens</button>
+            <button class="filter-btn" data-filter="noble-gases">Noble Gases</button>
+            <button class="filter-btn" data-filter="solid">Solids</button>
+            <button class="filter-btn" data-filter="liquid">Liquids</button>
+            <button class="filter-btn" data-filter="gas">Gases</button>
+        </div>
+
+        <div class="periodic-table" id="periodicTable">
+            <!-- Elements will be generated by JavaScript -->
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color alkali-metals"></div>
+                <span>Alkali Metals</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color alkaline-earth"></div>
+                <span>Alkaline Earth</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color transition-metals"></div>
+                <span>Transition Metals</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color post-transition"></div>
+                <span>Post-transition</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color metalloids"></div>
+                <span>Metalloids</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color nonmetals"></div>
+                <span>Nonmetals</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color halogens"></div>
+                <span>Halogens</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color noble-gases"></div>
+                <span>Noble Gases</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="elementModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-header">
+                <div class="modal-symbol" id="modalSymbol"></div>
+                <div class="modal-name" id="modalName"></div>
+            </div>
+            <div class="modal-details">
+                <div class="detail-item">
+                    <div class="detail-label">Atomic Number</div>
+                    <div class="detail-value" id="modalAtomicNumber"></div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Atomic Mass</div>
+                    <div class="detail-value" id="modalAtomicMass"></div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Category</div>
+                    <div class="detail-value" id="modalCategory"></div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">State</div>
+                    <div class="detail-value" id="modalState"></div>
+                </div>
+            </div>
+            <div class="fun-fact">
+                <div class="fun-fact-title">Fun Fact</div>
+                <div id="modalFunFact"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Cosmic background with Three.js
+        function createCosmicBackground() {
+            const canvas = document.getElementById('cosmic-background');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+            
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(0x000000, 0);
+            
+            // Create starfield
+            const starGeometry = new THREE.BufferGeometry();
+            const starCount = 2000;
+            const starPositions = new Float32Array(starCount * 3);
+            const starColors = new Float32Array(starCount * 3);
+            
+            for (let i = 0; i < starCount * 3; i += 3) {
+                starPositions[i] = (Math.random() - 0.5) * 2000;
+                starPositions[i + 1] = (Math.random() - 0.5) * 2000;
+                starPositions[i + 2] = (Math.random() - 0.5) * 2000;
+                
+                // Create varied star colors
+                const intensity = Math.random() * 0.5 + 0.5;
+                starColors[i] = intensity;
+                starColors[i + 1] = intensity * (0.8 + Math.random() * 0.2);
+                starColors[i + 2] = intensity * (0.6 + Math.random() * 0.4);
+            }
+            
+            starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+            starGeometry.setAttribute('color', new THREE.BufferAttribute(starColors, 3));
+            
+            const starMaterial = new THREE.PointsMaterial({
+                size: 2,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.8
+            });
+            
+            const stars = new THREE.Points(starGeometry, starMaterial);
+            scene.add(stars);
+            
+            // Create nebula clouds
+            const nebulaGeometry = new THREE.SphereGeometry(50, 32, 32);
+            const nebulaMaterial = new THREE.MeshBasicMaterial({
+                color: 0x6644ff,
+                transparent: true,
+                opacity: 0.1
+            });
+            
+            for (let i = 0; i < 5; i++) {
+                const nebula = new THREE.Mesh(nebulaGeometry, nebulaMaterial);
+                nebula.position.set(
+                    (Math.random() - 0.5) * 500,
+                    (Math.random() - 0.5) * 500,
+                    (Math.random() - 0.5) * 500
+                );
+                nebula.scale.set(
+                    Math.random() * 2 + 1,
+                    Math.random() * 2 + 1,
+                    Math.random() * 2 + 1
+                );
+                scene.add(nebula);
+            }
+            
+            // Create colorful particle systems
+            const particleGeometry = new THREE.BufferGeometry();
+            const particleCount = 500;
+            const particlePositions = new Float32Array(particleCount * 3);
+            const particleColors = new Float32Array(particleCount * 3);
+            
+            for (let i = 0; i < particleCount * 3; i += 3) {
+                particlePositions[i] = (Math.random() - 0.5) * 1000;
+                particlePositions[i + 1] = (Math.random() - 0.5) * 1000;
+                particlePositions[i + 2] = (Math.random() - 0.5) * 1000;
+                
+                // Purple/pink/blue particle colors
+                const colorChoice = Math.random();
+                if (colorChoice < 0.33) {
+                    particleColors[i] = 0.7;
+                    particleColors[i + 1] = 0.2;
+                    particleColors[i + 2] = 1.0;
+                } else if (colorChoice < 0.66) {
+                    particleColors[i] = 1.0;
+                    particleColors[i + 1] = 0.2;
+                    particleColors[i + 2] = 0.8;
+                } else {
+                    particleColors[i] = 0.2;
+                    particleColors[i + 1] = 0.6;
+                    particleColors[i + 2] = 1.0;
+                }
+            }
+            
+            particleGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+            particleGeometry.setAttribute('color', new THREE.BufferAttribute(particleColors, 3));
+            
+            const particleMaterial = new THREE.PointsMaterial({
+                size: 3,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.6
+            });
+            
+            const particles = new THREE.Points(particleGeometry, particleMaterial);
+            scene.add(particles);
+            
+            camera.position.z = 100;
+            
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                // Rotate the star field
+                stars.rotation.x += 0.0005;
+                stars.rotation.y += 0.001;
+                
+                // Rotate particles
+                particles.rotation.x += 0.001;
+                particles.rotation.y += 0.002;
+                
+                // Animate nebula
+                scene.children.forEach(child => {
+                    if (child.material && child.material.color && child.material.color.getHex() === 0x6644ff) {
+                        child.rotation.x += 0.002;
+                        child.rotation.y += 0.003;
+                    }
+                });
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        // Element data
+        const elements = [
+            // Period 1
+            { symbol: 'H', name: 'Hydrogen', atomicNumber: 1, atomicMass: 1.008, category: 'nonmetals', state: 'gas', row: 1, col: 1, funFact: 'The most abundant element in the universe, making up about 75% of all normal matter!' },
+            { symbol: 'He', name: 'Helium', atomicNumber: 2, atomicMass: 4.003, category: 'noble-gases', state: 'gas', row: 1, col: 18, funFact: 'Makes your voice sound funny and is the second most abundant element in the universe!' },
+            
+            // Period 2
+            { symbol: 'Li', name: 'Lithium', atomicNumber: 3, atomicMass: 6.941, category: 'alkali-metals', state: 'solid', row: 2, col: 1, funFact: 'The lightest metal and is used in batteries for phones and electric cars!' },
+            { symbol: 'Be', name: 'Beryllium', atomicNumber: 4, atomicMass: 9.012, category: 'alkaline-earth', state: 'solid', row: 2, col: 2, funFact: 'Six times stronger than steel and transparent to X-rays!' },
+            { symbol: 'B', name: 'Boron', atomicNumber: 5, atomicMass: 10.811, category: 'metalloids', state: 'solid', row: 2, col: 13, funFact: 'Essential for plant growth and makes really tough glass!' },
+            { symbol: 'C', name: 'Carbon', atomicNumber: 6, atomicMass: 12.011, category: 'nonmetals', state: 'solid', row: 2, col: 14, funFact: 'The basis of all life on Earth and can form diamonds or graphite!' },
+            { symbol: 'N', name: 'Nitrogen', atomicNumber: 7, atomicMass: 14.007, category: 'nonmetals', state: 'gas', row: 2, col: 15, funFact: 'Makes up 78% of Earth\'s atmosphere and is essential for proteins!' },
+            { symbol: 'O', name: 'Oxygen', atomicNumber: 8, atomicMass: 15.999, category: 'nonmetals', state: 'gas', row: 2, col: 16, funFact: 'We breathe it to live, and it makes up 21% of our atmosphere!' },
+            { symbol: 'F', name: 'Fluorine', atomicNumber: 9, atomicMass: 18.998, category: 'halogens', state: 'gas', row: 2, col: 17, funFact: 'The most reactive element and helps prevent tooth decay in toothpaste!' },
+            { symbol: 'Ne', name: 'Neon', atomicNumber: 10, atomicMass: 20.180, category: 'noble-gases', state: 'gas', row: 2, col: 18, funFact: 'Gives off a bright orange-red glow in neon signs!' },
+            
+            // Period 3
+            { symbol: 'Na', name: 'Sodium', atomicNumber: 11, atomicMass: 22.990, category: 'alkali-metals', state: 'solid', row: 3, col: 1, funFact: 'Explodes when it touches water and is essential for nerve function!' },
+            { symbol: 'Mg', name: 'Magnesium', atomicNumber: 12, atomicMass: 24.305, category: 'alkaline-earth', state: 'solid', row: 3, col: 2, funFact: 'Burns with a brilliant white light and is found in chlorophyll!' },
+            { symbol: 'Al', name: 'Aluminum', atomicNumber: 13, atomicMass: 26.982, category: 'post-transition', state: 'solid', row: 3, col: 13, funFact: 'The most abundant metal in Earth\'s crust and never rusts!' },
+            { symbol: 'Si', name: 'Silicon', atomicNumber: 14, atomicMass: 28.086, category: 'metalloids', state: 'solid', row: 3, col: 14, funFact: 'Makes computer chips possible and is the second most abundant element in Earth\'s crust!' },
+            { symbol: 'P', name: 'Phosphorus', atomicNumber: 15, atomicMass: 30.974, category: 'nonmetals', state: 'solid', row: 3, col: 15, funFact: 'Glows in the dark and is essential for DNA and bones!' },
+            { symbol: 'S', name: 'Sulfur', atomicNumber: 16, atomicMass: 32.065, category: 'nonmetals', state: 'solid', row: 3, col: 16, funFact: 'Gives rotten eggs their smell and is used in gunpowder!' },
+            { symbol: 'Cl', name: 'Chlorine', atomicNumber: 17, atomicMass: 35.453, category: 'halogens', state: 'gas', row: 3, col: 17, funFact: 'Keeps swimming pools clean and is half of table salt!' },
+            { symbol: 'Ar', name: 'Argon', atomicNumber: 18, atomicMass: 39.948, category: 'noble-gases', state: 'gas', row: 3, col: 18, funFact: 'Makes up 1% of our atmosphere and is used in light bulbs!' },
+            
+            // Period 4 (partial)
+            { symbol: 'K', name: 'Potassium', atomicNumber: 19, atomicMass: 39.098, category: 'alkali-metals', state: 'solid', row: 4, col: 1, funFact: 'Essential for bananas and muscle function!' },
+            { symbol: 'Ca', name: 'Calcium', atomicNumber: 20, atomicMass: 40.078, category: 'alkaline-earth', state: 'solid', row: 4, col: 2, funFact: 'Makes bones and teeth strong and is found in milk!' },
+            { symbol: 'Fe', name: 'Iron', atomicNumber: 26, atomicMass: 55.845, category: 'transition-metals', state: 'solid', row: 4, col: 8, funFact: 'Makes our blood red and is magnetic!' },
+            { symbol: 'Cu', name: 'Copper', atomicNumber: 29, atomicMass: 63.546, category: 'transition-metals', state: 'solid', row: 4, col: 11, funFact: 'Conducts electricity perfectly and turns green when it ages!' },
+            { symbol: 'Zn', name: 'Zinc', atomicNumber: 30, atomicMass: 65.38, category: 'transition-metals', state: 'solid', row: 4, col: 12, funFact: 'Protects other metals from rust and helps heal wounds!' },
+            { symbol: 'Br', name: 'Bromine', atomicNumber: 35, atomicMass: 79.904, category: 'halogens', state: 'liquid', row: 4, col: 17, funFact: 'One of only two liquid elements at room temperature!' },
+            { symbol: 'Kr', name: 'Krypton', atomicNumber: 36, atomicMass: 83.798, category: 'noble-gases', state: 'gas', row: 4, col: 18, funFact: 'Named after the Greek word for "hidden" and Superman\'s home planet!' },
+            
+            // Period 5 (partial)
+            { symbol: 'Ag', name: 'Silver', atomicNumber: 47, atomicMass: 107.868, category
