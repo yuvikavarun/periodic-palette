@@ -14,234 +14,64 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalElementDiscoveryYear = document.getElementById('modal-element-discovery-year');
     const modalElementFunFact = document.getElementById('modal-element-fun-fact');
 
-    // Element data
-    // Data collected from various reliable chemistry sources.
-    // Fun facts are simplified and for illustrative purposes.
+    // Element data (This is a complete list of 118 elements with fun facts)
     const elements = [
-        {
-            atomicNumber: 1, symbol: "H", name: "Hydrogen", atomicMass: 1.008, category: "nonmetal", state: "gas", discoveryYear: "1766",
-            funFact: "The most abundant chemical substance in the universe."
-        },
-        {
-            atomicNumber: 2, symbol: "He", name: "Helium", atomicMass: 4.0026, category: "noble-gas", state: "gas", discoveryYear: "1868",
-            funFact: "Makes your voice sound funny and is lighter than air!"
-        },
-        {
-            atomicNumber: 3, symbol: "Li", name: "Lithium", atomicMass: 6.94, category: "alkali-metal", state: "solid", discoveryYear: "1817",
-            funFact: "Used in batteries for phones and electric cars."
-        },
-        {
-            atomicNumber: 4, symbol: "Be", name: "Beryllium", atomicMass: 9.0122, category: "alkaline-earth-metal", state: "solid", discoveryYear: "1798",
-            funFact: "Its compounds are sweet-tasting but highly toxic."
-        },
-        {
-            atomicNumber: 5, symbol: "B", name: "Boron", atomicMass: 10.81, category: "metalloid", state: "solid", discoveryYear: "1808",
-            funFact: "Used in heat-resistant glass like Pyrex."
-        },
-        {
-            atomicNumber: 6, symbol: "C", name: "Carbon", atomicMass: 12.011, category: "nonmetal", state: "solid", discoveryYear: "Ancient",
-            funFact: "The basis of all known life on Earth, found in diamonds and graphite."
-        },
-        {
-            atomicNumber: 7, symbol: "N", name: "Nitrogen", atomicMass: 14.007, category: "nonmetal", state: "gas", discoveryYear: "1772",
-            funFact: "Makes up about 78% of Earth's atmosphere."
-        },
-        {
-            atomicNumber: 8, symbol: "O", name: "Oxygen", atomicMass: 15.999, category: "nonmetal", state: "gas", discoveryYear: "1774",
-            funFact: "Essential for breathing and combustion."
-        },
-        {
-            atomicNumber: 9, symbol: "F", name: "Fluorine", atomicMass: 18.998, category: "halogen", state: "gas", discoveryYear: "1886",
-            funFact: "The most reactive chemical element."
-        },
-        {
-            atomicNumber: 10, symbol: "Ne", name: "Neon", atomicMass: 20.180, category: "noble-gas", state: "gas", discoveryYear: "1898",
-            funFact: "Used in bright, glowing advertising signs."
-        },
-        {
-            atomicNumber: 11, symbol: "Na", name: "Sodium", atomicMass: 22.990, category: "alkali-metal", state: "solid", discoveryYear: "1807",
-            funFact: "Reacts violently with water; found in table salt."
-        },
-        {
-            atomicNumber: 12, symbol: "Mg", name: "Magnesium", atomicMass: 24.305, category: "alkaline-earth-metal", state: "solid", discoveryYear: "1755",
-            funFact: "Burns with a brilliant white light, used in fireworks."
-        },
-        {
-            atomicNumber: 13, symbol: "Al", name: "Aluminum", atomicMass: 26.982, category: "post-transition-metal", state: "solid", discoveryYear: "1825",
-            funFact: "Lightweight and strong, used in aircraft and soda cans."
-        },
-        {
-            atomicNumber: 14, symbol: "Si", name: "Silicon", atomicMass: 28.085, category: "metalloid", state: "solid", discoveryYear: "1823",
-            funFact: "The main component of computer chips and sand."
-        },
-        {
-            atomicNumber: 15, symbol: "P", name: "Phosphorus", atomicMass: 30.974, category: "nonmetal", state: "solid", discoveryYear: "1669",
-            funFact: "Essential for life, found in DNA and bones. Glows in the dark when white phosphorus."
-        },
-        {
-            atomicNumber: 16, symbol: "S", name: "Sulfur", atomicMass: 32.06, category: "nonmetal", state: "solid", discoveryYear: "Ancient",
-            funFact: "Smells like rotten eggs and is found near volcanoes."
-        },
-        {
-            atomicNumber: 17, symbol: "Cl", name: "Chlorine", atomicMass: 35.45, category: "halogen", state: "gas", discoveryYear: "1774",
-            funFact: "Used to disinfect swimming pools and purify water."
-        },
-        {
-            atomicNumber: 18, symbol: "Ar", name: "Argon", atomicMass: 39.948, category: "noble-gas", state: "gas", discoveryYear: "1894",
-            funFact: "Used in light bulbs to prevent the filament from burning out."
-        },
-        {
-            atomicNumber: 19, symbol: "K", name: "Potassium", atomicMass: 39.098, category: "alkali-metal", state: "solid", discoveryYear: "1807",
-            funFact: "Essential for plant growth and nerve function in humans."
-        },
-        {
-            atomicNumber: 20, symbol: "Ca", name: "Calcium", atomicMass: 40.078, category: "alkaline-earth-metal", state: "solid", discoveryYear: "1808",
-            funFact: "A major component of bones, teeth, and shells."
-        },
-        {
-            atomicNumber: 21, symbol: "Sc", name: "Scandium", atomicMass: 44.956, category: "transition-metal", state: "solid", discoveryYear: "1879",
-            funFact: "Used in aerospace components and sports equipment like bicycle frames."
-        },
-        {
-            atomicNumber: 22, symbol: "Ti", name: "Titanium", atomicMass: 47.867, category: "transition-metal", state: "solid", discoveryYear: "1791",
-            funFact: "Strong as steel but much lighter, used in aircraft and medical implants."
-        },
-        {
-            atomicNumber: 23, symbol: "V", name: "Vanadium", atomicMass: 50.942, category: "transition-metal", state: "solid", discoveryYear: "1801",
-            funFact: "Used to make strong, durable steel alloys for tools and engine parts."
-        },
-        {
-            atomicNumber: 24, symbol: "Cr", name: "Chromium", atomicMass: 51.996, category: "transition-metal", state: "solid", discoveryYear: "1797",
-            funFact: "Gives rubies their red color and used in chrome plating."
-        },
-        {
-            atomicNumber: 25, symbol: "Mn", name: "Manganese", atomicMass: 54.938, category: "transition-metal", state: "solid", discoveryYear: "1774",
-            funFact: "Essential for human health and used in steel production."
-        },
-        {
-            atomicNumber: 26, symbol: "Fe", name: "Iron", atomicMass: 55.845, category: "transition-metal", state: "solid", discoveryYear: "Ancient",
-            funFact: "The most common element on Earth by mass; forms the core of our planet."
-        },
-        {
-            atomicNumber: 27, symbol: "Co", name: "Cobalt", atomicMass: 58.933, category: "transition-metal", state: "solid", discoveryYear: "1735",
-            funFact: "Used to create strong magnets and in blue pigments for glass and ceramics."
-        },
-        {
-            atomicNumber: 28, symbol: "Ni", name: "Nickel", atomicMass: 58.693, category: "transition-metal", state: "solid", discoveryYear: "1751",
-            funFact: "Often used in coins and to make stainless steel."
-        },
-        {
-            atomicNumber: 29, symbol: "Cu", name: "Copper", atomicMass: 63.546, category: "transition-metal", state: "solid", discoveryYear: "Ancient",
-            funFact: "An excellent electrical conductor, widely used in wiring."
-        },
-        {
-            atomicNumber: 30, symbol: "Zn", name: "Zinc", atomicMass: 65.38, category: "post-transition-metal", state: "solid", discoveryYear: "Ancient",
-            funFact: "Used to galvanize steel to prevent rust and in batteries."
-        },
-        {
-            atomicNumber: 31, symbol: "Ga", name: "Gallium", atomicMass: 69.723, category: "post-transition-metal", state: "solid", discoveryYear: "1875",
-            funFact: "Melts in the palm of your hand (melting point 29.76 °C)."
-        },
-        {
-            atomicNumber: 32, symbol: "Ge", name: "Germanium", atomicMass: 72.63, category: "metalloid", state: "solid", discoveryYear: "1886",
-            funFact: "Used in fiber optic cables and infrared optics."
-        },
-        {
-            atomicNumber: 33, symbol: "As", name: "Arsenic", atomicMass: 74.922, category: "metalloid", state: "solid", discoveryYear: "1250",
-            funFact: "Known for its toxicity, historically used as a poison."
-        },
-        {
-            atomicNumber: 34, symbol: "Se", name: "Selenium", atomicMass: 78.971, category: "nonmetal", state: "solid", discoveryYear: "1817",
-            funFact: "Its electrical conductivity increases with light, used in photocopiers."
-        },
-        {
-            atomicNumber: 35, symbol: "Br", name: "Bromine", atomicMass: 79.904, category: "halogen", state: "liquid", discoveryYear: "1826",
-            funFact: "One of only two elements that are liquid at room temperature."
-        },
-        {
-            atomicNumber: 36, symbol: "Kr", name: "Krypton", atomicMass: 83.798, category: "noble-gas", state: "gas", discoveryYear: "1898",
-            funFact: "Used in some types of photographic flashes and lighting."
-        },
-        {
-            atomicNumber: 37, symbol: "Rb", name: "Rubidium", atomicMass: 85.468, category: "alkali-metal", state: "solid", discoveryYear: "1861",
-            funFact: "Highly reactive and ignites spontaneously in air."
-        },
-        {
-            atomicNumber: 38, symbol: "Sr", name: "Strontium", atomicMass: 87.62, category: "alkaline-earth-metal", state: "solid", discoveryYear: "1790",
-            funFact: "Gives fireworks a brilliant red color."
-        },
-        {
-            atomicNumber: 39, symbol: "Y", name: "Yttrium", atomicMass: 88.906, category: "transition-metal", state: "solid", discoveryYear: "1794",
-            funFact: "Used in red phosphors for color televisions (older TVs)."
-        },
-        {
-            atomicNumber: 40, symbol: "Zr", name: "Zirconium", atomicMass: 91.224, category: "transition-metal", state: "solid", discoveryYear: "1789",
-            funFact: "Highly resistant to corrosion, used in nuclear reactors."
-        },
-        {
-            atomicNumber: 41, symbol: "Nb", name: "Niobium", atomicMass: 92.906, category: "transition-metal", state: "solid", discoveryYear: "1801",
-            funFact: "Used in superconducting magnets and jet engines."
-        },
-        {
-            atomicNumber: 42, symbol: "Mo", name: "Molybdenum", atomicMass: 95.95, category: "transition-metal", state: "solid", discoveryYear: "1778",
-            funFact: "Essential for many enzymes and used in high-strength alloys."
-        },
-        {
-            atomicNumber: 43, symbol: "Tc", name: "Technetium", atomicMass: 98, category: "transition-metal", state: "solid", discoveryYear: "1937",
-            funFact: "The lightest element with no stable isotopes; all its forms are radioactive."
-        },
-        {
-            atomicNumber: 44, symbol: "Ru", name: "Ruthenium", atomicMass: 101.07, category: "transition-metal", state: "solid", discoveryYear: "1844",
-            funFact: "Used to harden platinum and palladium in electrical contacts."
-        },
-        {
-            atomicNumber: 45, symbol: "Rh", name: "Rhodium", atomicMass: 102.91, category: "transition-metal", state: "solid", discoveryYear: "1803",
-            funFact: "One of the most expensive precious metals, used in catalytic converters."
-        },
-        {
-            atomicNumber: 46, symbol: "Pd", name: "Palladium", atomicMass: 106.42, category: "transition-metal", state: "solid", discoveryYear: "1803",
-            funFact: "Can absorb up to 900 times its own volume of hydrogen."
-        },
-        {
-            atomicNumber: 47, symbol: "Ag", name: "Silver", atomicMass: 107.87, category: "transition-metal", state: "solid", discoveryYear: "Ancient",
-            funFact: "The best electrical and thermal conductor of all metals."
-        },
-        {
-            atomicNumber: 48, symbol: "Cd", name: "Cadmium", atomicMass: 112.41, category: "post-transition-metal", state: "solid", discoveryYear: "1817",
-            funFact: "Toxic, but used in rechargeable batteries (NiCd) and nuclear reactor control rods."
-        },
-        {
-            atomicNumber: 49, symbol: "In", name: "Indium", atomicMass: 114.82, category: "post-transition-metal", state: "solid", discoveryYear: "1863",
-            funFact: "Used in transparent conductive coatings for touchscreens (ITO)."
-        },
-        {
-            atomicNumber: 50, symbol: "Sn", name: "Tin", atomicMass: 118.71, category: "post-transition-metal", state: "solid", discoveryYear: "Ancient",
-            funFact: "Used to coat steel cans to prevent corrosion (tin cans)."
-        },
-        {
-            atomicNumber: 51, symbol: "Sb", name: "Antimony", atomicMass: 121.76, category: "metalloid", state: "solid", discoveryYear: "Ancient",
-            funFact: "Used in flame retardants, ceramics, and some semiconductors."
-        },
-        {
-            atomicNumber: 52, symbol: "Te", name: "Tellurium", atomicMass: 127.60, category: "metalloid", state: "solid", discoveryYear: "1782",
-            funFact: "Can be found in trace amounts in the human body."
-        },
-        {
-            atomicNumber: 53, symbol: "I", name: "Iodine", atomicMass: 126.90, category: "halogen", state: "solid", discoveryYear: "1811",
-            funFact: "Essential for thyroid function; added to table salt."
-        },
-        {
-            atomicNumber: 54, symbol: "Xe", name: "Xenon", atomicMass: 131.29, category: "noble-gas", state: "gas", discoveryYear: "1898",
-            funFact: "Used in high-intensity discharge lamps and some spacecraft propulsion systems."
-        },
-        {
-            atomicNumber: 55, symbol: "Cs", name: "Cesium", atomicMass: 132.91, category: "alkali-metal", state: "solid", discoveryYear: "1860",
-            funFact: "The most reactive metal; used in atomic clocks due to its precise vibrations."
-        },
-        {
-            atomicNumber: 56, symbol: "Ba", name: "Barium", atomicMass: 137.33, category: "alkaline-earth-metal", state: "solid", discoveryYear: "1808",
-            funFact: "Used in medical imaging for X-rays of the digestive system."
-        },
+        { atomicNumber: 1, symbol: "H", name: "Hydrogen", atomicMass: 1.008, category: "nonmetal", state: "gas", discoveryYear: "1766", funFact: "The most abundant chemical substance in the universe." },
+        { atomicNumber: 2, symbol: "He", name: "Helium", atomicMass: 4.0026, category: "noble-gas", state: "gas", discoveryYear: "1868", funFact: "Makes your voice sound funny and is lighter than air!" },
+        { atomicNumber: 3, symbol: "Li", name: "Lithium", atomicMass: 6.94, category: "alkali-metal", state: "solid", discoveryYear: "1817", funFact: "Used in batteries for phones and electric cars." },
+        { atomicNumber: 4, symbol: "Be", name: "Beryllium", atomicMass: 9.0122, category: "alkaline-earth-metal", state: "solid", discoveryYear: "1798", funFact: "Its compounds are sweet-tasting but highly toxic." },
+        { atomicNumber: 5, symbol: "B", name: "Boron", atomicMass: 10.81, category: "metalloid", state: "solid", discoveryYear: "1808", funFact: "Used in heat-resistant glass like Pyrex." },
+        { atomicNumber: 6, symbol: "C", name: "Carbon", atomicMass: 12.011, category: "nonmetal", state: "solid", discoveryYear: "Ancient", funFact: "The basis of all known life on Earth, found in diamonds and graphite." },
+        { atomicNumber: 7, symbol: "N", name: "Nitrogen", atomicMass: 14.007, category: "nonmetal", state: "gas", discoveryYear: "1772", funFact: "Makes up about 78% of Earth's atmosphere." },
+        { atomicNumber: 8, symbol: "O", name: "Oxygen", atomicMass: 15.999, category: "nonmetal", state: "gas", discoveryYear: "1774", funFact: "Essential for breathing and combustion." },
+        { atomicNumber: 9, symbol: "F", name: "Fluorine", atomicMass: 18.998, category: "halogen", state: "gas", discoveryYear: "1886", funFact: "The most reactive chemical element." },
+        { atomicNumber: 10, symbol: "Ne", name: "Neon", atomicMass: 20.180, category: "noble-gas", state: "gas", discoveryYear: "1898", funFact: "Used in bright, glowing advertising signs." },
+        { atomicNumber: 11, symbol: "Na", name: "Sodium", atomicMass: 22.990, category: "alkali-metal", state: "solid", discoveryYear: "1807", funFact: "Reacts violently with water; found in table salt." },
+        { atomicNumber: 12, symbol: "Mg", name: "Magnesium", atomicMass: 24.305, category: "alkaline-earth-metal", state: "solid", discoveryYear: "1755", funFact: "Burns with a brilliant white light, used in fireworks." },
+        { atomicNumber: 13, symbol: "Al", name: "Aluminum", atomicMass: 26.982, category: "post-transition-metal", state: "solid", discoveryYear: "1825", funFact: "Lightweight and strong, used in aircraft and soda cans." },
+        { atomicNumber: 14, symbol: "Si", name: "Silicon", atomicMass: 28.085, category: "metalloid", state: "solid", discoveryYear: "1823", funFact: "The main component of computer chips and sand." },
+        { atomicNumber: 15, symbol: "P", name: "Phosphorus", atomicMass: 30.974, category: "nonmetal", state: "solid", discoveryYear: "1669", funFact: "Essential for life, found in DNA and bones. Glows in the dark when white phosphorus." },
+        { atomicNumber: 16, symbol: "S", name: "Sulfur", atomicMass: 32.06, category: "nonmetal", state: "solid", discoveryYear: "Ancient", funFact: "Smells like rotten eggs and is found near volcanoes." },
+        { atomicNumber: 17, symbol: "Cl", name: "Chlorine", atomicMass: 35.45, category: "halogen", state: "gas", discoveryYear: "1774", funFact: "Used to disinfect swimming pools and purify water." },
+        { atomicNumber: 18, symbol: "Ar", name: "Argon", atomicMass: 39.948, category: "noble-gas", state: "gas", discoveryYear: "1894", funFact: "Used in light bulbs to prevent the filament from burning out." },
+        { atomicNumber: 19, symbol: "K", name: "Potassium", atomicMass: 39.098, category: "alkali-metal", state: "solid", discoveryYear: "1807", funFact: "Essential for plant growth and nerve function in humans." },
+        { atomicNumber: 20, symbol: "Ca", name: "Calcium", atomicMass: 40.078, category: "alkaline-earth-metal", state: "solid", discoveryYear: "1808", funFact: "A major component of bones, teeth, and shells." },
+        { atomicNumber: 21, symbol: "Sc", name: "Scandium", atomicMass: 44.956, category: "transition-metal", state: "solid", discoveryYear: "1879", funFact: "Used in aerospace components and sports equipment like bicycle frames." },
+        { atomicNumber: 22, symbol: "Ti", name: "Titanium", atomicMass: 47.867, category: "transition-metal", state: "solid", discoveryYear: "1791", funFact: "Strong as steel but much lighter, used in aircraft and medical implants." },
+        { atomicNumber: 23, symbol: "V", name: "Vanadium", atomicMass: 50.942, category: "transition-metal", state: "solid", discoveryYear: "1801", funFact: "Used to make strong, durable steel alloys for tools and engine parts." },
+        { atomicNumber: 24, symbol: "Cr", name: "Chromium", atomicMass: 51.996, category: "transition-metal", state: "solid", discoveryYear: "1797", funFact: "Gives rubies their red color and used in chrome plating." },
+        { atomicNumber: 25, symbol: "Mn", name: "Manganese", atomicMass: 54.938, category: "transition-metal", state: "solid", discoveryYear: "1774", funFact: "Essential for human health and used in steel production." },
+        { atomicNumber: 26, symbol: "Fe", name: "Iron", atomicMass: 55.845, category: "transition-metal", state: "solid", discoveryYear: "Ancient", funFact: "The most common element on Earth by mass; forms the core of our planet." },
+        { atomicNumber: 27, symbol: "Co", name: "Cobalt", atomicMass: 58.933, category: "transition-metal", state: "solid", discoveryYear: "1735", funFact: "Used to create strong magnets and in blue pigments for glass and ceramics." },
+        { atomicNumber: 28, symbol: "Ni", name: "Nickel", atomicMass: 58.693, category: "transition-metal", state: "solid", discoveryYear: "1751", funFact: "Often used in coins and to make stainless steel." },
+        { atomicNumber: 29, symbol: "Cu", name: "Copper", atomicMass: 63.546, category: "transition-metal", state: "solid", discoveryYear: "Ancient", funFact: "An excellent electrical conductor, widely used in wiring." },
+        { atomicNumber: 30, symbol: "Zn", name: "Zinc", atomicMass: 65.38, category: "post-transition-metal", state: "solid", discoveryYear: "Ancient", funFact: "Used to galvanize steel to prevent rust and in batteries." },
+        { atomicNumber: 31, symbol: "Ga", name: "Gallium", atomicMass: 69.723, category: "post-transition-metal", state: "solid", discoveryYear: "1875", funFact: "Melts in the palm of your hand (melting point 29.76 °C)." },
+        { atomicNumber: 32, symbol: "Ge", name: "Germanium", atomicMass: 72.63, category: "metalloid", state: "solid", discoveryYear: "1886", funFact: "Used in fiber optic cables and infrared optics." },
+        { atomicNumber: 33, symbol: "As", name: "Arsenic", atomicMass: 74.922, category: "metalloid", state: "solid", discoveryYear: "1250", funFact: "Known for its toxicity, historically used as a poison." },
+        { atomicNumber: 34, symbol: "Se", name: "Selenium", atomicMass: 78.971, category: "nonmetal", state: "solid", discoveryYear: "1817", funFact: "Its electrical conductivity increases with light, used in photocopiers." },
+        { atomicNumber: 35, symbol: "Br", name: "Bromine", atomicMass: 79.904, category: "halogen", state: "liquid", discoveryYear: "1826", funFact: "One of only two elements that are liquid at room temperature." },
+        { atomicNumber: 36, symbol: "Kr", name: "Krypton", atomicMass: 83.798, category: "noble-gas", state: "gas", discoveryYear: "1898", funFact: "Used in some types of photographic flashes and lighting." },
+        { atomicNumber: 37, symbol: "Rb", name: "Rubidium", atomicMass: 85.468, category: "alkali-metal", state: "solid", discoveryYear: "1861", funFact: "Highly reactive and ignites spontaneously in air." },
+        { atomicNumber: 38, symbol: "Sr", name: "Strontium", atomicMass: 87.62, category: "alkaline-earth-metal", state: "solid", discoveryYear: "1790", funFact: "Gives fireworks a brilliant red color." },
+        { atomicNumber: 39, symbol: "Y", name: "Yttrium", atomicMass: 88.906, category: "transition-metal", state: "solid", discoveryYear: "1794", funFact: "Used in red phosphors for color televisions (older TVs)." },
+        { atomicNumber: 40, symbol: "Zr", name: "Zirconium", atomicMass: 91.224, category: "transition-metal", state: "solid", discoveryYear: "1789", funFact: "Highly resistant to corrosion, used in nuclear reactors." },
+        { atomicNumber: 41, symbol: "Nb", name: "Niobium", atomicMass: 92.906, category: "transition-metal", state: "solid", discoveryYear: "1801", funFact: "Used in superconducting magnets and jet engines." },
+        { atomicNumber: 42, symbol: "Mo", name: "Molybdenum", atomicMass: 95.95, category: "transition-metal", state: "solid", discoveryYear: "1778", funFact: "Essential for many enzymes and used in high-strength alloys." },
+        { atomicNumber: 43, symbol: "Tc", name: "Technetium", atomicMass: 98, category: "transition-metal", state: "solid", discoveryYear: "1937", funFact: "The lightest element with no stable isotopes; all its forms are radioactive." },
+        { atomicNumber: 44, symbol: "Ru", name: "Ruthenium", atomicMass: 101.07, category: "transition-metal", state: "solid", discoveryYear: "1844", funFact: "Used to harden platinum and palladium in electrical contacts." },
+        { atomicNumber: 45, symbol: "Rh", name: "Rhodium", atomicMass: 102.91, category: "transition-metal", state: "solid", discoveryYear: "1803", funFact: "One of the most expensive precious metals, used in catalytic converters." },
+        { atomicNumber: 46, symbol: "Pd", name: "Palladium", atomicMass: 106.42, category: "transition-metal", state: "solid", discoveryYear: "1803", funFact: "Can absorb up to 900 times its own volume of hydrogen." },
+        { atomicNumber: 47, symbol: "Ag", name: "Silver", atomicMass: 107.87, category: "transition-metal", state: "solid", discoveryYear: "Ancient", funFact: "The best electrical and thermal conductor of all metals." },
+        { atomicNumber: 48, symbol: "Cd", name: "Cadmium", atomicMass: 112.41, category: "post-transition-metal", state: "solid", discoveryYear: "1817", funFact: "Toxic, but used in rechargeable batteries (NiCd) and nuclear reactor control rods." },
+        { atomicNumber: 49, symbol: "In", name: "Indium", atomicMass: 114.82, category: "post-transition-metal", state: "solid", discoveryYear: "1863", funFact: "Used in transparent conductive coatings for touchscreens (ITO)." },
+        { atomicNumber: 50, symbol: "Sn", name: "Tin", atomicMass: 118.71, category: "post-transition-metal", state: "solid", discoveryYear: "Ancient", funFact: "Used to coat steel cans to prevent corrosion (tin cans)." },
+        { atomicNumber: 51, symbol: "Sb", name: "Antimony", atomicMass: 121.76, category: "metalloid", state: "solid", discoveryYear: "Ancient", funFact: "Used in flame retardants, ceramics, and some semiconductors." },
+        { atomicNumber: 52, symbol: "Te", name: "Tellurium", atomicMass: 127.60, category: "metalloid", state: "solid", discoveryYear: "1782", funFact: "Can be found in trace amounts in the human body." },
+        { atomicNumber: 53, symbol: "I", name: "Iodine", atomicMass: 126.90, category: "halogen", state: "solid", discoveryYear: "1811", funFact: "Essential for thyroid function; added to table salt." },
+        { atomicNumber: 54, symbol: "Xe", name: "Xenon", atomicMass: 131.29, category: "noble-gas", state: "gas", discoveryYear: "1898", funFact: "Used in high-intensity discharge lamps and some spacecraft propulsion systems." },
+        { atomicNumber: 55, symbol: "Cs", name: "Cesium", atomicMass: 132.91, category: "alkali-metal", state: "solid", discoveryYear: "1860", funFact: "The most reactive metal; used in atomic clocks due to its precise vibrations." },
+        { atomicNumber: 56, symbol: "Ba", name: "Barium", atomicMass: 137.33, category: "alkaline-earth-metal", state: "solid", discoveryYear: "1808", funFact: "Used in medical imaging for X-rays of the digestive system." },
         // Lanthanide Series - Typically placed below the main table
         { atomicNumber: 57, symbol: "La", name: "Lanthanum", atomicMass: 138.91, category: "lanthanide", state: "solid", discoveryYear: "1839", funFact: "Used in camera lenses and lighter flints." },
         { atomicNumber: 58, symbol: "Ce", name: "Cerium", atomicMass: 140.12, category: "lanthanide", state: "solid", discoveryYear: "1803", funFact: "Used in catalytic converters and self-cleaning ovens." },
@@ -259,74 +89,23 @@ document.addEventListener('DOMContentLoaded', () => {
         { atomicNumber: 70, symbol: "Yb", name: "Ytterbium", atomicMass: 173.04, category: "lanthanide", state: "solid", discoveryYear: "1878", funFact: "Used in some specialized stainless steels and stress gauges." },
         { atomicNumber: 71, symbol: "Lu", name: "Lutetium", atomicMass: 174.97, category: "lanthanide", state: "solid", discoveryYear: "1907", funFact: "Used in some medical imaging detectors." },
 
-        {
-            atomicNumber: 72, symbol: "Hf", name: "Hafnium", atomicMass: 178.49, category: "transition-metal", state: "solid", discoveryYear: "1923",
-            funFact: "Used in control rods for nuclear reactors due to its high neutron absorption."
-        },
-        {
-            atomicNumber: 73, symbol: "Ta", name: "Tantalum", atomicMass: 180.95, category: "transition-metal", state: "solid", discoveryYear: "1802",
-            funFact: "Highly corrosion-resistant, used in surgical implants and capacitors."
-        },
-        {
-            atomicNumber: 74, symbol: "W", name: "Tungsten", atomicMass: 183.84, category: "transition-metal", state: "solid", discoveryYear: "1783",
-            funFact: "Has the highest melting point of all metals, used in light bulb filaments."
-        },
-        {
-            atomicNumber: 75, "symbol": "Re", "name": "Rhenium", "atomicMass": 186.207, "category": "transition-metal", "state": "solid", "discoveryYear": "1925",
-            "funFact": "One of the rarest elements, used in high-temperature superalloys for jet engines."
-        },
-        {
-            atomicNumber: 76, "symbol": "Os", "name": "Osmium", "atomicMass": 190.23, "category": "transition-metal", "state": "solid", "discoveryYear": "1803",
-            "funFact": "The densest naturally occurring element."
-        },
-        {
-            atomicNumber: 77, "symbol": "Ir", "name": "Iridium", "atomicMass": 192.217, "category": "transition-metal", "state": "solid", "discoveryYear": "1803",
-            "funFact": "The most corrosion-resistant metal, found in meteorites."
-        },
-        {
-            atomicNumber: 78, "symbol": "Pt", "name": "Platinum", "atomicMass": 195.084, "category": "transition-metal", "state": "solid", "discoveryYear": "1735",
-            "funFact": "A precious metal used in jewelry, catalytic converters, and laboratory equipment."
-        },
-        {
-            atomicNumber: 79, "symbol": "Au", "name": "Gold", "atomicMass": 196.967, "category": "transition-metal", "state": "solid", "discoveryYear": "Ancient",
-            "funFact": "Highly malleable and ductile, does not corrode, used in jewelry and electronics."
-        },
-        {
-            atomicNumber: 80, "symbol": "Hg", "name": "Mercury", "atomicMass": 200.59, "category": "post-transition-metal", "state": "liquid", "discoveryYear": "Ancient",
-            "funFact": "The only metal that is liquid at room temperature."
-        },
-        {
-            atomicNumber: 81, "symbol": "Tl", "name": "Thallium", "atomicMass": 204.38, "category": "post-transition-metal", "state": "solid", "discoveryYear": "1861",
-            "funFact": "Highly toxic, historically used as a rat poison."
-        },
-        {
-            atomicNumber: 82, "symbol": "Pb", "name": "Lead", "atomicMass": 207.2, "category": "post-transition-metal", "state": "solid", "discoveryYear": "Ancient",
-            "funFact": "Used in car batteries and radiation shielding, but its use is declining due to toxicity."
-        },
-        {
-            atomicNumber: 83, "symbol": "Bi", "name": "Bismuth", "atomicMass": 208.98, "category": "post-transition-metal", "state": "solid", "discoveryYear": "1753",
-            "funFact": "Has a low melting point and is used in cosmetics and some pharmaceuticals."
-        },
-        {
-            atomicNumber: 84, "symbol": "Po", "name": "Polonium", "atomicMass": 209, "category": "metalloid", "state": "solid", "discoveryYear: "1898",
-            "funFact": "Highly radioactive, discovered by Marie Curie."
-        },
-        {
-            atomicNumber: 85, "symbol": "At", "name": "Astatine", "atomicMass": 210, "category": "halogen", "state": "solid", "discoveryYear": "1940",
-            "funFact": "The rarest naturally occurring element on Earth."
-        },
-        {
-            atomicNumber: 86, "symbol": "Rn", "name": "Radon", "atomicMass": 222, "category": "noble-gas", "state": "gas", "discoveryYear": "1900",
-            "funFact": "A radioactive gas that can accumulate in homes, posing a health risk."
-        },
-        {
-            atomicNumber: 87, "symbol": "Fr", "name": "Francium", "atomicMass": 223, "category": "alkali-metal", "state": "solid", "discoveryYear": "1939",
-            "funFact": "The second-rarest naturally occurring element, extremely radioactive."
-        },
-        {
-            atomicNumber: 88, "symbol": "Ra", "name": "Radium", "atomicMass": 226, "category": "alkaline-earth-metal", "state": "solid", "discoveryYear": "1898",
-            "funFact": "Discovered by Marie Curie, used in luminous paints (now mostly phased out)."
-        },
+        { atomicNumber: 72, symbol: "Hf", name: "Hafnium", atomicMass: 178.49, category: "transition-metal", state: "solid", discoveryYear: "1923", funFact: "Used in control rods for nuclear reactors due to its high neutron absorption." },
+        { atomicNumber: 73, symbol: "Ta", name: "Tantalum", atomicMass: 180.95, category: "transition-metal", state: "solid", discoveryYear: "1802", funFact: "Highly corrosion-resistant, used in surgical implants and capacitors." },
+        { atomicNumber: 74, symbol: "W", name: "Tungsten", atomicMass: 183.84, category: "transition-metal", state: "solid", discoveryYear: "1783", funFact: "Has the highest melting point of all metals, used in light bulb filaments." },
+        { atomicNumber: 75, "symbol": "Re", "name": "Rhenium", "atomicMass": 186.207, "category": "transition-metal", "state": "solid", "discoveryYear": "1925", "funFact": "One of the rarest elements, used in high-temperature superalloys for jet engines." },
+        { atomicNumber: 76, "symbol": "Os", "name": "Osmium", "atomicMass": 190.23, "category": "transition-metal", "state": "solid", "discoveryYear": "1803", "funFact": "The densest naturally occurring element." },
+        { atomicNumber: 77, "symbol": "Ir", "name": "Iridium", "atomicMass": 192.217, "category": "transition-metal", "state": "solid", "discoveryYear": "1803", "funFact": "The most corrosion-resistant metal, found in meteorites." },
+        { atomicNumber: 78, "symbol": "Pt", "name": "Platinum", "atomicMass": 195.084, "category": "transition-metal", "state": "solid", "discoveryYear": "1735", "funFact": "A precious metal used in jewelry, catalytic converters, and laboratory equipment." },
+        { atomicNumber: 79, "symbol": "Au", "name": "Gold", "atomicMass": 196.967, "category": "transition-metal", "state": "solid", "discoveryYear": "Ancient", "funFact": "Highly malleable and ductile, does not corrode, used in jewelry and electronics." },
+        { atomicNumber: 80, "symbol": "Hg", "name": "Mercury", "atomicMass": 200.59, "category": "post-transition-metal", "state": "liquid", "discoveryYear": "Ancient", "funFact": "The only metal that is liquid at room temperature." },
+        { atomicNumber: 81, "symbol": "Tl", "name": "Thallium", "atomicMass": 204.38, "category": "post-transition-metal", "state": "solid", "discoveryYear": "1861", "funFact": "Highly toxic, historically used as a rat poison." },
+        { atomicNumber: 82, "symbol": "Pb", "name": "Lead", "atomicMass": 207.2, "category": "post-transition-metal", "state": "solid", "discoveryYear": "Ancient", "funFact": "Used in car batteries and radiation shielding, but its use is declining due to toxicity." },
+        { atomicNumber: 83, "symbol": "Bi", "name": "Bismuth", "atomicMass": 208.98, "category": "post-transition-metal", "state": "solid", "discoveryYear": "1753", "funFact": "Has a low melting point and is used in cosmetics and some pharmaceuticals." },
+        { atomicNumber: 84, "symbol": "Po", "name": "Polonium", atomicMass: 209, "category: "metalloid", "state": "solid", "discoveryYear": "1898", "funFact": "Highly radioactive, discovered by Marie Curie." },
+        { atomicNumber: 85, "symbol": "At", "name": "Astatine", atomicMass: 210, "category": "halogen", "state": "solid", "discoveryYear": "1940", "funFact": "The rarest naturally occurring element on Earth." },
+        { atomicNumber: 86, "symbol": "Rn", "name": "Radon", atomicMass: 222, "category": "noble-gas", "state": "gas", "discoveryYear": "1900", "funFact": "A radioactive gas that can accumulate in homes, posing a health risk." },
+        { atomicNumber: 87, "symbol": "Fr", "name": "Francium", atomicMass: 223, "category": "alkali-metal", "state": "solid", "discoveryYear": "1939", "funFact": "The second-rarest naturally occurring element, extremely radioactive." },
+        { atomicNumber: 88, "symbol": "Ra", "name": "Radium", atomicMass: 226, "category": "alkaline-earth-metal", "state": "solid", "discoveryYear": "1898", "funFact": "Discovered by Marie Curie, used in luminous paints (now mostly phased out)." },
         // Actinide Series - Typically placed below the main table
         { atomicNumber: 89, symbol: "Ac", name: "Actinium", atomicMass: 227, category: "actinide", state: "solid", discoveryYear: "1899", funFact: "Highly radioactive, glows in the dark due to its radioactivity." },
         { atomicNumber: 90, symbol: "Th", name: "Thorium", atomicMass: 232.038, category: "actinide", state: "solid", discoveryYear: "1828", funFact: "Potentially a future nuclear fuel source." },
@@ -440,6 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         // Add Lanthanide and Actinide TEXT LABELS directly to the main grid
+        // These are not element cards, they are just labels to fill the space visually.
         const lanthanideLabel = document.createElement('div');
         lanthanideLabel.classList.add('lanthanide-label');
         lanthanideLabel.textContent = 'Lanthanides';
